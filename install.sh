@@ -40,7 +40,7 @@ dot_clone_dot()
   then
     (cd "$HOME/.dot" && $git_bin pull)
   else
-    $git_bin clone git://github.com/dsouza/dot.git "$HOME/.dot"
+    $git_bin clone git://github.com/lorn/dot.git "$HOME/.dot"
   fi
 }
 
@@ -51,7 +51,7 @@ dot_clone_zsh()
   then
     (cd "$HOME/.oh-my-zsh" && $git_bin pull)
   else
-    $git_bin clone git://github.com/dsouza/oh-my-zsh "$HOME/.oh-my-zsh"
+    $git_bin clone git://github.com/lorn/oh-my-zsh "$HOME/.oh-my-zsh"
   fi
 }
 
