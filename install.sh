@@ -55,6 +55,17 @@ dot_clone_zsh()
   fi
 }
 
+dot_clone_vim()
+{
+  print_info "Cloning vim-info $HOME/.vim_confs"
+  if [ -d "$HOME/.vim_confs" ]
+  then
+    (cd "$HOME/.vim_confs" && $git_bin pull)
+  else
+    $git_bin clone git://github.com/lorn/vim_confs "$HOME/.vim_confs"
+  fi
+}
+
 dot_install_dot()
 {
   print_info "INSTALLING DOT FILES"
@@ -76,6 +87,9 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dot/dot.xresourcesrc" "$HOME/.xresourcesrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.muttrc" "$HOME/.muttrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.mutt" "$HOME/.mutt"
+  $ln_bin -s -f -n "$HOME/.dot/dot.esig" "$HOME/.esig"
+  $ln_bin -s -f -n "$HOME/.vim_conf" "$HOME/.vim"
+  $ln_bin -s -f -n "$HOME/.vim_conf/vimrc" "$HOME/.vimrc"
 }
 
 dot_install_zsh()
@@ -86,6 +100,7 @@ dot_install_zsh()
 
 check_binaries
 dot_clone_dot
+dot_clone_vim
 dot_install_dot
 dot_clone_zsh
 dot_install_zsh
