@@ -1,0 +1,22 @@
+set folder      = "imaps://imap.gmail.com/"
+set spoolfile   = "=INBOX"
+set signature   = "~/.esig"
+set from = "lorn@lornlab.org"
+set envelope_from_address = "lorn@lornlab.org"
+set smtp_url = smtps://lorn@lornlab.org@smtp.gmail.com"
+set imap_user = "lorn@lornlab.org"
+source "/etc/Muttrc"
+source /usr/share/doc/mutt/examples/gpg.rc
+source ~/.mutt/mutt-vars
+source ~/.mutt/mutt-aliases
+source ~/.mutt/mutt-color
+source ~/.mutt/mutt-bindings
+source ~/.mutt/mutt-views
+source ~/.mutt/mutt-hooks
+
+set postponed = "+[Gmail]/Drafts"
+unset record
+
+#set trash="+[Gmail]/Trash"
+
+

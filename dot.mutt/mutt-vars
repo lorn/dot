@@ -62,7 +62,7 @@ set index_format="%2N %4C %Z %{%b %d} %[%H:%M] %-15.15L (%?l?%4l&%4c?) %s"
 
 set print_command="muttprint -p TO_FILE:/home/dsouza/tmp/muttprint.ps -n fontsize=\\small -z 8pt"
 
-set realname = "Diego Souza"
+set realname = "Lindolfo 'Lorn' Rodrigues"
 set use_from
 
 set move=no
