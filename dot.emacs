@@ -7,6 +7,9 @@
 (require 'color-theme)
 (require 'zenburn)
 (require 'epa-file)
+(require 'col-highlight)
+(require 'find-file-in-tags)
+
 (epa-file-enable)
 
 (eval-after-load "color-theme"
@@ -14,6 +17,7 @@
      (color-theme-initialize)
      (color-theme-zenburn)))
 
+(set-face-background 'col-highlight zenburn-bg-1)
 (set-face-attribute 'mode-line nil :box nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -22,6 +26,7 @@
 ; (show-ws-toggle-show-tabs)
 ; (show-ws-toggle-show-trailing-whitespace)
 
+(setq-default mmm-submode-decoration-level 0)
 (setq-default backup-inhibited t)
 (setq-default haskell-program-name "ghci \"+.\"")
 (setq-default indent-tabs-mode nil)
@@ -47,10 +52,13 @@
 (setq-default erc-timestamp-right-align-by-pixel t)
 (setq-default erc-nick (quote ("dsouza" "_dsouza_" "__dsouza__")))
 
+(col-highlight-set-interval 1)
+(toggle-highlight-column-when-idle t)
+
+(size-indication-mode t)
 (global-font-lock-mode t)
 (global-linum-mode t)
 (global-hl-line-mode)
-(line-number-mode t)
 (column-number-mode t)
 (cua-mode t)
 ;(ido-mode t)
@@ -66,13 +74,14 @@
 
 ; (global-set-key (kbd "C-c a") 'align-string)
 ; (global-set-key (kbd "C-c i") 'ispell-buffer)
+(global-set-key (read-kbd-macro "C-,") 'find-file-in-tags)
 (global-set-key (kbd "C-c q") 'view-mode)
 (global-set-key (kbd "C-c t") 'icicle-find-file-in-tags-table)
 (global-set-key (kbd "C-c q") 'delete-frame)
 (global-set-key (kbd "C-c w") 'server-edit)
 (global-set-key (kbd "S-<f8>") 'compile)
 (global-set-key (kbd "S-<f9>") 'ispell-change-dictionary)
-(global-set-key (kbd "S-<f10>") 'viper-mode)
+(global-set-key (kbd "S-<f10>") 'toggle-viper-mode)
 (global-set-key (kbd "S-<f11>") 'whitespace-mode)
 (global-set-key (kbd "S-<f7>") 'toggle-truncate-lines)
 (global-set-key (kbd "C-k") 'kill-whole-line)
@@ -86,6 +95,14 @@
 (put 'scroll-left 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+
+
+(setq load-path (cons  "/usr/local/Cellar/erlang/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs"
+                       load-path))
+(setq erlang-root-dir "/usr/local/otp")
+(setq exec-path (cons "/usr/local/otp/bin" exec-path))
+
+(require 'erlang-start)
 
 (setq auto-mode-alist (cons '("/tmp/mutt.*$" . post-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
