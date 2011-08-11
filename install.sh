@@ -88,8 +88,8 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dot/dot.muttrc" "$HOME/.muttrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.mutt" "$HOME/.mutt"
   $ln_bin -s -f -n "$HOME/.dot/dot.esig" "$HOME/.esig"
-  $ln_bin -s -f -n "$HOME/.vim_conf" "$HOME/.vim"
-  $ln_bin -s -f -n "$HOME/.vim_conf/vimrc" "$HOME/.vimrc"
+  $ln_bin -s -f -n "$HOME/.vim_confs" "$HOME/.vim"
+  $ln_bin -s -f -n "$HOME/.vim_confs/vimrc" "$HOME/.vimrc"
 }
 
 dot_install_zsh()
