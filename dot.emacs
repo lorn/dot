@@ -104,6 +104,11 @@
 
 (require 'erlang-start)
 
+;;; cperl-mode is preferred to perl-mode                                        
+;;; "Brevity is the soul of wit" <foo at acm.org>                               
+(defalias 'perl-mode 'cperl-mode)
+
+
 (setq auto-mode-alist (cons '("/tmp/mutt.*$" . post-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
