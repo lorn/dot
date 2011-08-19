@@ -8,9 +8,15 @@
 (require 'zenburn)
 (require 'epa-file)
 (require 'col-highlight)
-(require 'find-file-in-tags)
-
+(require 'myemacs)
+(require 'uniquify)
+(require 'yasnippet-bundle)
 (epa-file-enable)
+
+(when (not (boundp 'ac-dictionary-directories)) (setq ac-dictionary-directories ()))
+(add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
+(require 'auto-complete-config)
+(ac-config-default)
 
 (eval-after-load "color-theme"
   '(progn
@@ -26,6 +32,19 @@
 ; (show-ws-toggle-show-tabs)
 ; (show-ws-toggle-show-trailing-whitespace)
 
+(windmove-default-keybindings 'super)
+
+(speedbar (- 1))
+(speedbar-add-supported-extension ".hs")
+(speedbar-add-supported-extension ".h")
+(speedbar-add-supported-extension ".c")
+(speedbar-add-supported-extension ".cc")
+(speedbar-add-supported-extension ".py")
+(speedbar-add-supported-extension ".pl")
+(speedbar-add-supported-extension ".rb")
+(speedbar-add-supported-extension ".js")
+(speedbar-add-supported-extension ".el")
+
 (setq-default mmm-submode-decoration-level 0)
 (setq-default backup-inhibited t)
 (setq-default haskell-program-name "ghci \"+.\"")
@@ -35,8 +54,9 @@
 (setq-default blink-matching-paren t)
 (setq-default inhibit-startup-screen t)
 (setq-default modeline-shadow-thickness 0)
-(setq-default cua-toggle-set-mark nil)
 (setq-default cua-enable-cua-keys nil)
+(setq cua-highlight-region-shift-only t) ;; no transient mark mode
+(setq cua-toggle-set-mark nil) ;; original set-mark behavior, i.e. no transient-mark-mode
 (setq-default ido-enable-flex-matching t)
 (setq-default c-default-style "bsd")
 (setq-default c-basic-offset 2)
@@ -51,6 +71,9 @@
 (setq-default erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477")))
 (setq-default erc-timestamp-right-align-by-pixel t)
 (setq-default erc-nick (quote ("dsouza" "_dsouza_" "__dsouza__")))
+(setq-default uniquify-buffer-name-style 'post-forward)
+(setq-default uniquify-strip-common-suffix nil)
+(setq-default ac-auto-show-menu nil)
 
 (col-highlight-set-interval 1)
 (toggle-highlight-column-when-idle t)
@@ -60,6 +83,7 @@
 (global-linum-mode t)
 (global-hl-line-mode)
 (column-number-mode t)
+(transient-mark-mode nil)
 (cua-mode t)
 ;(ido-mode t)
 (icy-mode t)
@@ -72,22 +96,25 @@
 ; (add-hook 'mail-mode-hook 'turn-on-auto-fill)
 (add-hook 'mail-mode-hook 'flyspell-mode t)
 
-; (global-set-key (kbd "C-c a") 'align-string)
 ; (global-set-key (kbd "C-c i") 'ispell-buffer)
-(global-set-key (read-kbd-macro "C-,") 'find-file-in-tags)
-(global-set-key (kbd "C-c q") 'view-mode)
-(global-set-key (kbd "C-c t") 'icicle-find-file-in-tags-table)
-(global-set-key (kbd "C-c q") 'delete-frame)
-(global-set-key (kbd "C-c w") 'server-edit)
-(global-set-key (kbd "S-<f8>") 'compile)
-(global-set-key (kbd "S-<f9>") 'ispell-change-dictionary)
-(global-set-key (kbd "S-<f10>") 'toggle-viper-mode)
-(global-set-key (kbd "S-<f11>") 'whitespace-mode)
-(global-set-key (kbd "S-<f7>") 'toggle-truncate-lines)
+; (global-set-key (kbd "C-c a") 'align-string)
+(global-set-key (kbd "C-c v") 'view-mode)
+(global-set-key (kbd "C-c f") 'icicle-find-file-in-tags-table)
+(global-set-key (kbd "C-c s") 'my-open-shell-sideways)
+(global-set-key (kbd "C-c w") 'my-copy-line)
+(global-set-key (kbd "C-S-a") 'beginning-of-line-text)
+(global-set-key (kbd "C-c c") 'describe-char)
+(global-set-key (kbd "C-S-o") 'my-prepend-line)
+(global-set-key (kbd "C-o") 'my-append-line)
+(global-set-key (kbd "S-<f5>") 'flyspell-mode)
+(global-set-key (kbd "<f5>") 'ispell-change-dictionary)
+(global-set-key (kbd "<f6>") 'whitespace-mode)
+(global-set-key (kbd "<f7>") 'toggle-truncate-lines)
+(global-set-key (kbd "<f9>") 'speedbar)
 (global-set-key (kbd "C-k") 'kill-whole-line)
-(global-set-key (kbd "C-x C-k") 'kill-line)
-(global-set-key (kbd "C-x C-d") 'kill-region)
-(global-set-key (kbd "C-S-y") 'x-clipboard-yank)
+(global-set-key (kbd "C-S-k") 'kill-line)
+
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -95,33 +122,6 @@
 (put 'scroll-left 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'upcase-region 'disabled nil)
+(put 'set-goal-column 'disabled nil)
 
-
-(setq load-path (cons  "/usr/local/Cellar/erlang/R14B03/lib/erlang/lib/tools-2.6.6.4/emacs"
-                       load-path))
-(setq erlang-root-dir "/usr/local/otp")
-(setq exec-path (cons "/usr/local/otp/bin" exec-path))
-
-(require 'erlang-start)
-
-;;; cperl-mode is preferred to perl-mode                                        
-;;; "Brevity is the soul of wit" <foo at acm.org>                               
-(defalias 'perl-mode 'cperl-mode)
-
-
-(setq auto-mode-alist (cons '("/tmp/mutt.*$" . post-mode) auto-mode-alist))
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
- '(uniquify-strip-common-suffix nil))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
