@@ -4,12 +4,12 @@
 ;; Description: Extensions to `icomplete.el'.
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2010, Drew Adams, all rights reserved.
+;; Copyright (C) 1996-2011, Drew Adams, all rights reserved.
 ;; Created: Mon Oct 16 13:33:18 1995
 ;; Version: 21.0
-;; Last-Updated: Fri Jan 15 13:21:51 2010 (-0800)
+;; Last-Updated: Wed Aug 24 09:52:00 2011 (-0700)
 ;;           By: dradams
-;;     Update #: 880
+;;     Update #: 931
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/icomplete+.el
 ;; Keywords: help, abbrev, internal, extensions, local
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -62,6 +62,16 @@
 ;;
 ;;; Change log:
 ;;
+;; 2011/08/24 dadams
+;;     Added top-level puts for common-lisp-indent-function.
+;;     with-local-quit, while-no-input:
+;;       Define only if not defined.  Use put for indentation.  Remove declare declaration.
+;; 2011/06/05 dadams
+;;     icomplete-completions: Handle Emacs 24's new METADATA arg for completion-try-completion.
+;; 2011/01/04 dadams
+;;     Removed autoload cookies from non def* sexps.  Added them for defgroup, defface.
+;; 2010/07/29 dadams
+;;     with-local-quit, with-no-input: Protect declare with fboundp.
 ;; 2009/08/06 dadams
 ;;     icomplete-completions (Emacs < 23): Bind, don't set, to initialize nb-candidates.
 ;; 2008/06/01 dadams
@@ -152,6 +162,7 @@
 
 ;;;;;;;;;;;;;;;;;;;
 
+;;;###autoload
 (defgroup Icomplete-Plus nil
   "Icomplete Enhancements."
   :prefix "icompletep-"
@@ -170,17 +181,20 @@ Don't forget to mention your Emacs and library versions."))
   :link '(emacs-commentary-link :tag "Commentary" "icomplete+")
   )
 
+;;;###autoload
 (defface icompletep-choices
     '((((background dark)) (:foreground "Snow4"))
       (t (:foreground "DarkBlue")))
   "*Face for minibuffer reminder of possible completion suffixes."
   :group 'Icomplete-Plus)
 
+;;;###autoload
 (defface icompletep-determined
     '((t (:foreground "SeaGreen")))
   "*Face for minibuffer reminder of possible completion prefix."
   :group 'Icomplete-Plus)
 
+;;;###autoload
 (defface icompletep-nb-candidates
   '((((background dark)) (:foreground "SpringGreen"))
     (t (:foreground "DarkMagenta")))
@@ -188,6 +202,7 @@ Don't forget to mention your Emacs and library versions."))
 This has no effect unless library `icicles.el' is being used."
   :group 'Icomplete-Plus)
 
+;;;###autoload
 (defface icompletep-keys
     '((t (:foreground "Red")))
   "*Face for minibuffer reminder of possible completion key bindings."
@@ -209,7 +224,6 @@ This has no effect unless library `icicles.el' is being used."
 ;; Save match-data.
 ;; Don't insert if input begins with `(' (e.g. `repeat-complex-command').
 ;;
-;;;###autoload
 (when (< emacs-major-version 23)        ; Emacs 20, 21, 22.
   (defun icomplete-exhibit ()
     "Insert icomplete completions display.
@@ -261,35 +275,37 @@ See `icomplete-mode' and `minibuffer-setup-hook'."
 ;;; These two macros are defined in `subr.el' for Emacs 23+.
 ;;; They are included here only so you can, if needed, byte-compile this file using Emacs < 23
 ;;; and still use the byte-compiled file in Emacs 23+.
-(defmacro with-local-quit (&rest body)
-  "Execute BODY, allowing quits to terminate BODY but not escape further.
+(unless (fboundp 'with-local-quit)
+  (defmacro with-local-quit (&rest body)
+    "Execute BODY, allowing quits to terminate BODY but not escape further.
 When a quit terminates BODY, `with-local-quit' returns nil but
 requests another quit.  That quit will be processed as soon as quitting
 is allowed once again.  (Immediately, if `inhibit-quit' is nil.)"
-  (declare (debug t) (indent 0))
-  `(condition-case nil
-    (let ((inhibit-quit nil))
-      ,@body)
-    (quit (setq quit-flag t)
-     ;; This call is to give a chance to handle quit-flag
-     ;; in case inhibit-quit is nil.
-     ;; Without this, it will not be handled until the next function
-     ;; call, and that might allow it to exit thru a condition-case
-     ;; that intends to handle the quit signal next time.
-     (eval '(ignore nil)))))
+    `(condition-case nil
+      (let ((inhibit-quit nil))
+        ,@body)
+      (quit (setq quit-flag t)
+       ;; This call is to give a chance to handle quit-flag
+       ;; in case inhibit-quit is nil.
+       ;; Without this, it will not be handled until the next function
+       ;; call, and that might allow it to exit thru a condition-case
+       ;; that intends to handle the quit signal next time.
+       (eval '(ignore nil)))))
+  (put 'with-local-quit 'common-lisp-indent-function '(&body)))
 
-(defmacro while-no-input (&rest body)   ; Defined in `subr.el'.
-  "Execute BODY only as long as there's no pending input.
+(unless (fboundp 'while-no-input)
+  (defmacro while-no-input (&rest body) ; Defined in `subr.el'.
+    "Execute BODY only as long as there's no pending input.
 If input arrives, that ends the execution of BODY,
 and `while-no-input' returns t.  Quitting makes it return nil.
 If BODY finishes, `while-no-input' returns whatever value BODY produced."
-  (declare (debug t) (indent 0))
-  (let ((catch-sym (make-symbol "input")))
-    `(with-local-quit
-      (catch ',catch-sym
-        (let ((throw-on-input ',catch-sym))
-          (or (input-pending-p)
-              (progn ,@body)))))))
+    (let ((catch-sym (make-symbol "input")))
+      `(with-local-quit
+        (catch ',catch-sym
+          (let ((throw-on-input ',catch-sym))
+            (or (input-pending-p)
+                (progn ,@body)))))))
+  (put 'while-no-input 'common-lisp-indent-function '(&body)))
 
 
 
@@ -298,48 +314,48 @@ If BODY finishes, `while-no-input' returns whatever value BODY produced."
 ;; Save match-data.
 ;; Don't insert if input begins with `(' (e.g. `repeat-complex-command').
 ;;
-;;;###autoload
-(when (> emacs-major-version 22)        ; Emacs 23.
+(when (> emacs-major-version 22)        ; Emacs 23+
   (defun icomplete-exhibit ()
     "Insert icomplete completions display.
 Should be run via minibuffer `post-command-hook'.  See `icomplete-mode'
 and `minibuffer-setup-hook'."
     (when (and icomplete-mode (icomplete-simple-completing-p))
-      (save-match-data
-        (save-excursion
-          (goto-char (point-max))
-          ;; Insert the match-status information.
-          (when (and (> (point-max) (minibuffer-prompt-end))
-                     buffer-undo-list   ; Wait for some user input.
-                     (save-excursion    ; Do nothing if looking at a list, string, etc.
-                       (goto-char (minibuffer-prompt-end))
+      (save-excursion
+        (goto-char (point-max))
+        ;; Insert the match-status information.
+        (when (and (> (point-max) (minibuffer-prompt-end))
+                   buffer-undo-list     ; Wait for some user input.
+                   (save-excursion      ; Do nothing if looking at a list, string, etc.
+                     (goto-char (minibuffer-prompt-end))
+                     (save-match-data
                        (not (looking-at ; No (, ", ', 9 etc. at start.
-                             "\\(\\s-+$\\|\\s-*\\(\\s(\\|\\s\"\\|\\s'\\|\\s<\\|[0-9]\\)\\)")))
-                     (or
-                      ;; Don't bother with delay after certain number of chars:
-                      (> (- (point) (field-beginning)) icomplete-max-delay-chars)
-                      ;; Don't delay if alternatives number is small enough:
-                      (and (sequencep minibuffer-completion-table)
-                           (< (length minibuffer-completion-table)
-                              icomplete-delay-completions-threshold))
-                      ;; Delay - give some grace time for next keystroke, before
-                      ;; embarking on computing completions:
-                      (sit-for icomplete-compute-delay)))
-            (let ((text (while-no-input
-                         (icomplete-completions (field-string)
-                                                minibuffer-completion-table
-                                                minibuffer-completion-predicate
-                                                (not minibuffer-completion-confirm))))
-                  (buffer-undo-list t)
-                  deactivate-mark)
-              ;; Do nothing if `while-no-input' was aborted.
-              (when (stringp text)
-                (move-overlay icomplete-overlay (point) (point) (current-buffer))
-                ;; The current C cursor code doesn't know to use the overlay's
-                ;; marker's stickiness to figure out whether to place the cursor
-                ;; before or after the string, so let's spoon-feed it the pos.
-                (put-text-property 0 1 'cursor t text)
-                (overlay-put icomplete-overlay 'after-string text)))))))))
+                             "\\(\\s-+$\\|\\s-*\\(\\s(\\|\\s\"\\|\\s'\\|\\s<\\|[0-9]\\)\\)"))))
+                   (or
+                    ;; Don't bother with delay after certain number of chars:
+                    (> (- (point) (field-beginning)) icomplete-max-delay-chars)
+                    ;; Don't delay if alternatives number is small enough:
+                    (and (sequencep minibuffer-completion-table)
+                         (< (length minibuffer-completion-table)
+                            icomplete-delay-completions-threshold))
+                    ;; Delay - give some grace time for next keystroke, before
+                    ;; embarking on computing completions:
+                    (sit-for icomplete-compute-delay)))
+          (let ((text             (while-no-input
+                                   (icomplete-completions
+                                    (field-string)
+                                    minibuffer-completion-table
+                                    minibuffer-completion-predicate
+                                    (not minibuffer-completion-confirm))))
+                (buffer-undo-list t)
+                deactivate-mark)
+            ;; Do nothing if `while-no-input' was aborted.
+            (when (stringp text)
+              (move-overlay icomplete-overlay (point) (point) (current-buffer))
+              ;; The current C cursor code doesn't know to use the overlay's
+              ;; marker's stickiness to figure out whether to place the cursor
+              ;; before or after the string, so let's spoon-feed it the pos.
+              (put-text-property 0 1 'cursor t text)
+              (overlay-put icomplete-overlay 'after-string text))))))))
 
 
 
@@ -350,7 +366,6 @@ and `minibuffer-setup-hook'."
 ;; 3. Highlights key-binding text.
 ;; 4. Appends number of remaining cycle candidates (for Icicles).
 ;;
-;;;###autoload
 (when (< emacs-major-version 23)        ; Emacs 20, 21, 22.
   (defun icomplete-completions (name candidates predicate require-match)
     "Identify prospective candidates for minibuffer completion.
@@ -475,7 +490,6 @@ following the rest of the icomplete info:
 ;; 3. Highlights key-binding text.
 ;; 4. Appends number of remaining cycle candidates (for Icicles).
 ;;
-;;;###autoload
 (when (> emacs-major-version 22)        ; Emacs 23.
   (defun icomplete-completions (name candidates predicate require-match)
     "Identify prospective candidates for minibuffer completion.
@@ -498,7 +512,7 @@ Prospective completion suffixes (if any) are displayed, bracketed by
 The displays for unambiguous matches have ` [ Matched ]' appended
 \(whether complete or not), or ` \[ No matches ]', if no eligible
 matches exist.  \(Keybindings for uniquely matched commands are
-exhibited within the square brackets, [].)
+exhibited within brackets, [].)
 
 When more than one completion is available, the total number precedes
 the suffixes display, like this:
@@ -528,11 +542,17 @@ following the rest of the icomplete info:
                     "\t%sNo matches%s")
                   open-bracket close-bracket)
 ;;; $$$$$   (if last (setcdr last nil))
-        (let* ((most-try
+        (let* ((mdata  (and (fboundp 'completion--field-metadata)
+                            (completion--field-metadata (field-beginning))))
+               (most-try
 ;;; $$$$$           (if (and base-size (> base-size 0))
 ;;;                     (completion-try-completion name candidates predicate (length name))
 ;;;                   ;; If `comps' are 0-based, result should be the same with `comps'.
-                  (completion-try-completion name comps nil (length name)))
+
+                ;; $$$$$$$$ UNLESS BUG #8795 is fixed, need METADATA even if nil.
+                (if (fboundp 'completion--field-metadata) ; Emacs 24 added a 5th arg, METADATA.
+                    (completion-try-completion name comps nil (length name) mdata)
+                  (completion-try-completion name comps nil (length name))))
                (most (if (consp most-try) (car most-try) (if most-try (car comps) "")))
                ;; Compare name and most, so we can determine if name is
                ;; a prefix of most, or something else.

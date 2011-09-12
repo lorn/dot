@@ -4,12 +4,12 @@
 ;; Description: Internal variables for Icicles
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2009, Drew Adams, all rights reserved.
+;; Copyright (C) 1996-2010, Drew Adams, all rights reserved.
 ;; Created: Mon Feb 27 09:23:26 2006
 ;; Version: 22.0
-;; Last-Updated: Fri Jun  4 17:44:34 2010 (-0700)
+;; Last-Updated: Mon Oct 25 08:52:08 2010 (-0700)
 ;;           By: dradams
-;;     Update #: 1311
+;;     Update #: 1353
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/icicles-var.el
 ;; Keywords: internal, extensions, help, abbrev, local, minibuffer,
 ;;           keys, apropos, completion, matching, regexp, command
@@ -18,9 +18,9 @@
 ;; Features that might be required by this library:
 ;;
 ;;   `apropos', `apropos-fn+var', `cl', `el-swank-fuzzy', `ffap',
-;;   `ffap-', `fuzzy-match', `hexrgb', `icicles-face', `icicles-opt',
-;;   `kmacro', `levenshtein', `thingatpt', `thingatpt+', `wid-edit',
-;;   `widget'.
+;;   `ffap-', `fuzzy', `fuzzy-match', `hexrgb', `icicles-face',
+;;   `icicles-opt', `kmacro', `levenshtein', `regexp-opt',
+;;   `thingatpt', `thingatpt+', `wid-edit', `widget'.
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -53,7 +53,9 @@
 ;;    `icicle-completing-read+insert-candidates',
 ;;    `icicle-completion-candidates',
 ;;    `icicle-completion-prompt-overlay',
-;;    `icicle-completion-set-history', `icicle-confirm-exit-commands',
+;;    `icicle-completion-set-history',
+;;    `icicle-completions-format-internal',
+;;    `icicle-confirm-exit-commands',
 ;;    `icicle-current-completion-candidate-overlay',
 ;;    `icicle-current-completion-mode', `icicle-current-input',
 ;;    `icicle-current-raw-input', `icicle-current-TAB-method',
@@ -92,7 +94,10 @@
 ;;    `icicle-list-use-nth-parts', `icicle-menu-map',
 ;;    `icicle-minibuffer-message-ok-p', `icicle-minor-mode-map-entry',
 ;;    `icicle-ms-windows-drive-hash', `icicle-must-match-regexp',
-;;    `icicle-must-not-match-regexp', `icicle-must-pass-predicate',
+;;    `icicle-must-not-match-regexp',
+;;    `icicle-must-pass-after-match-predicate',
+;;    `icicle-must-pass-predicate',
+;;    `icicle-nb-candidates-before-truncation',
 ;;    `icicle-nb-of-other-cycle-candidates',
 ;;    `icicle-next-apropos-complete-cycles-p',
 ;;    `icicle-next-prefix-complete-cycles-p',
@@ -291,10 +296,10 @@ follows it invisible.")
   "Alist of candidate entries.
 The car (key) of each entry is treated as a completion candidate.
 The cdr is some other data to be used when the candidate is chosen.
+This is reset to nil at the beginning of each top-level command.
 
-This is reset to nil at the beginning of each top-level command.  It
-is used only by commands that use completion without allowing sorting
-of completion candidates.")
+This is used typically by commands that allow different cdrs for the
+same car.  Icicles search is one such example.")
 
 (defvar icicle-char-property-value-history nil "History for character property values.")
 
@@ -344,6 +349,10 @@ Each alist element is of the form (NAME KEY . BINDING), where:
 
 (defvar icicle-completion-set-history nil "History for completion-set names.")
 
+(defvar icicle-completions-format-internal icicle-completions-format
+  "Internal version of `icicle-completions-format'.
+Used to override the option for multi-completions.")
+
 (defvar icicle-confirm-exit-commands
   (and (boundp 'minibuffer-confirm-exit-commands)
        (append '(icicle-prefix-complete icicle-prefix-complete-no-display
@@ -364,7 +373,7 @@ Effective starting with Emacs 23.")
 
 (defvar icicle-current-input "" "Current minibuffer input.")
 
-(defvar icicle-current-TAB-method 'basic
+(defvar icicle-current-TAB-method nil
   "*Current completion method for \
 `\\<minibuffer-local-completion-map>\\[icicle-prefix-complete]'.")
 
@@ -515,8 +524,8 @@ noted in parentheses.
 * `icicle-Completions-window-max-height' - Max lines in *Completions*
 * `icicle-customize-save-flag'           - Save some options on quit?
 * `icicle-cycle-into-subdirs-flag'       - Explore subdirectories?
-* `icicle-cycling-respects-completion-mode' - Completion mode affects
-                                           cycling mode?
+* `icicle-default-cycling-mode'          - Default completion mode for
+                                           per-mode cycling
 * `icicle-default-thing-insertion'       - Control behavior of \
 \\<minibuffer-local-completion-map>\\[icicle-insert-string-at-point]
 * `icicle-default-value'                 - How to treat default value
@@ -575,7 +584,6 @@ noted in parentheses.
 `\\[icicle-candidate-set-retrieve]'
 * `icicle-search-cleanup-flag'           - Remove search highlighting?
                                            (`C-.')
-* `icicle-search-context-match-predicate'- Search-context predicate
 * `icicle-search-from-isearch-keys'      - Isearch-to-Icicles keys
 * `icicle-search-highlight-all-current-flag'- In each hit (`C-^')
 * `icicle-search-highlight-context-levels-flag' -
@@ -585,7 +593,7 @@ noted in parentheses.
 * `icicle-search-replace-common-match-flag' - Replace ECM? (`M-;')
 * `icicle-search-replace-literally-flag' - Replace text literally?
 * `icicle-search-replace-whole-candidate-flag' - Replace input match
-                                           or whole search hit?(`C-,')
+                                           or whole search hit?(`M-_')
 * `icicle-search-ring-max'               - Icicles `search-ring-max'
 * `icicle-search-whole-word-flag'        - Find whole words? (`M-q')
 * `icicle-show-Completions-help-flag'    - Show *Completions* help?
@@ -686,7 +694,7 @@ input prompt is prefixed by `+'.
 + `icicle-bookmark-non-file-other-window' - Jump to buffer bookmark
 + `icicle-bookmark-region-other-window' - Jump to a region bookmark
 + `icicle-bookmark-remote-file-other-window' - Jump to a remote file
-+ `icicle-bookmark-w3m-other-window'   - Jump to a W3M (URL) bookmark
++ `icicle-bookmark-url-other-window'   - Jump to a URL bookmark
 + `icicle-buffer'(`-other-window')     - Switch to buffer (`C-x b')
 + `icicle-buffer-config'               - Pick `icicle-buffer' options
 + `icicle-buffer-list'                 - Choose a list of buffer names
@@ -782,7 +790,7 @@ input prompt is prefixed by `+'.
 + `icicle-search-remote-file-bookmark' - Search remote bookmarks
 + `icicle-search-sentences'            - Search sentences as contexts
 + `icicle-search-text-property'        - Search for face... (`C-c \"')
-+ `icicle-search-w3m-bookmark'         - Search bookmarked URLs
++ `icicle-search-url-bookmark'         - Search bookmarked URLs
 + `icicle-search-word'                 - Whole-word search
 + `icicle-select-bookmarked-region'    - Select bookmarked regions
 + `icicle-select-frame'                - Select a frame by name
@@ -977,12 +985,29 @@ candidates whose display form does not match it.
 The display form is the string shown in `*Completions*'.
 See also `icicle-must-match-regexp'.")
 
+(defvar icicle-must-pass-after-match-predicate nil
+  "Predicate that completions must satisfy after matching input, or nil.
+This is just like `icicle-must-pass-predicate', except that it is
+applied only to display candidates that match your current input.")
+
 (defvar icicle-must-pass-predicate nil
-  "A predicate that completion candidates must satisfy, or nil.
+  "Predicate that completion display candidates must satisfy, or nil.
 If nil, then this does nothing.  Otherwise, this is a function of one
-argument, a candidate, and only candidates whose display form
-satisfies the predicate are displayed.  The display form is the string
-shown in `*Completions*'.")
+argument, a display candidate (a string), and only the display
+candidates that satisfy the predicate are displayed.  A display
+candidate is a string of text such as you see in buffer
+`*Completions*'.
+
+Note that this predicate is different from the PREDICATE argument for
+function `completing-read' or `read-file-name'.  The latter applies to
+the elements of the COLLECTION argument, which are typically alist
+entries or obarray symbols.  `icicle-must-pass-predicate' applies
+instead to a string, the display form of a completion candidate.
+
+See also `icicle-must-pass-after-match-predicate'.")
+
+(defvar icicle-nb-candidates-before-truncation 0
+  "Number of candidates, before truncation per `icicle-max-candidates'.")
 
 (defvar icicle-nb-of-other-cycle-candidates 0
   "Number of other candidates available for cycling.

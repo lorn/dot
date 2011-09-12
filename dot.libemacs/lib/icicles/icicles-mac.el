@@ -4,12 +4,12 @@
 ;; Description: Macros for Icicles
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 1996-2009, Drew Adams, all rights reserved.
+;; Copyright (C) 1996-2010, Drew Adams, all rights reserved.
 ;; Created: Mon Feb 27 09:24:28 2006
 ;; Version: 22.0
-;; Last-Updated: Sat Jun  5 06:40:17 2010 (-0700)
+;; Last-Updated: Mon Oct 25 09:17:26 2010 (-0700)
 ;;           By: dradams
-;;     Update #: 535
+;;     Update #: 550
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/icicles-mac.el
 ;; Keywords: internal, extensions, help, abbrev, local, minibuffer,
 ;;           keys, apropos, completion, matching, regexp, command
@@ -194,7 +194,7 @@ before the others."
                                                    icicle-default-value))
     (icicle-must-match-regexp                    icicle-buffer-match-regexp)
     (icicle-must-not-match-regexp                icicle-buffer-no-match-regexp)
-    (icicle-must-pass-predicate                  icicle-buffer-predicate)
+    (icicle-must-pass-after-match-predicate      icicle-buffer-predicate)
     (icicle-require-match-flag                   icicle-buffer-require-match-flag)
     (icicle-extra-candidates                     icicle-buffer-extras)
     (icicle-ignore-space-prefix-flag             icicle-buffer-ignore-space-prefix-flag)
@@ -242,7 +242,7 @@ before the others."
                                                         icicle-default-value)))
     (icicle-must-match-regexp                    icicle-file-match-regexp)
     (icicle-must-not-match-regexp                icicle-file-no-match-regexp)
-    (icicle-must-pass-predicate                  icicle-file-predicate)
+    (icicle-must-pass-after-match-predicate      icicle-file-predicate)
     (icicle-require-match-flag                   icicle-file-require-match-flag)
     (icicle-extra-candidates                     icicle-file-extras)
     (icicle-transform-function                   'icicle-remove-dups-if-extras)
@@ -252,7 +252,7 @@ before the others."
      (or icicle-candidate-alt-action-fn (icicle-alt-act-fn-for-type "file")))
     (icicle-all-candidates-list-alt-action-fn
      (or icicle-all-candidates-list-alt-action-fn (icicle-alt-act-fn-for-type "file")))
-    (icicle-delete-candidate-object   'icicle-delete-file-or-directory)))
+    (icicle-delete-candidate-object              'icicle-delete-file-or-directory)))
 
 (defmacro icicle-define-command
     (command doc-string function prompt collection &optional
@@ -260,10 +260,12 @@ before the others."
      bindings first-sexp undo-sexp last-sexp not-interactive-p)
   ;; Hard-code these in doc string, because \\[...] prefers ASCII
   ;; `C-RET'   instead of `\\[icicle-candidate-action]'
-  ;; `C-down'  instead of `\\[icicle-next-prefix-candidate-action]'
-  ;; `C-up'    instead of `\\[icicle-previous-prefix-candidate-action]'
+  ;; `C-down'  instead of `\\[icicle-next-candidate-per-mode-action]'
+  ;; `C-up', `C-wheel-up' instead of `\\[icicle-previous-candidate-per-mode-action]'
   ;; `C-next'  instead of `\\[icicle-next-apropos-candidate-action]'
   ;; `C-prior' instead of `\\[icicle-previous-apropos-candidate-action]'
+  ;; `C-end'   instead of `\\[icicle-next-prefix-candidate-action]'
+  ;; `C-home'  instead of `\\[icicle-previous-prefix-candidate-action]'
   "Define COMMAND with DOC-STRING based on FUNCTION.
 COMMAND is a symbol.  DOC-STRING is a string.
 FUNCTION is a function that takes one argument, read as input.
@@ -317,10 +319,12 @@ these keys with prefix `C-' are active:
 
 \\<minibuffer-local-completion-map>\
 `C-mouse-2', `C-RET' - Act on current completion candidate only
-`C-down'  - Move to next prefix-completion candidate and act
-`C-up'    - Move to previous prefix-completion candidate and act
+`C-down', `C-wheel-down' - Move to next completion candidate and act
+`C-up', `C-wheel-up' - Move to previous completion candidate and act
 `C-next'  - Move to next apropos-completion candidate and act
 `C-prior' - Move to previous apropos-completion candidate and act
+`C-end'   - Move to next prefix-completion candidate and act
+`C-home'  - Move to previous prefix-completion candidate and act
 `\\[icicle-all-candidates-action]'     - Act on *all* candidates, successively (careful!)
 
 When candidate action and cycling are combined (e.g. `C-next'), user
@@ -397,10 +401,12 @@ This is an Icicles command - see command `icicle-mode'.")
      bindings first-sexp undo-sexp last-sexp not-interactive-p)
   ;; Hard-code these in doc string, because \\[...] prefers ASCII
   ;; `C-RET'   instead of `\\[icicle-candidate-action]'
-  ;; `C-down'  instead of `\\[icicle-next-prefix-candidate-action]'
-  ;; `C-up'    instead of `\\[icicle-previous-prefix-candidate-action]'
+  ;; `C-down'  instead of `\\[icicle-next-candidate-per-mode-action]'
+  ;; `C-up', `C-wheel-up' instead of `\\[icicle-previous-candidate-per-mode-action]'
   ;; `C-next'  instead of `\\[icicle-next-apropos-candidate-action]'
   ;; `C-prior' instead of `\\[icicle-previous-apropos-candidate-action]'
+  ;; `C-end'   instead of `\\[icicle-next-prefix-candidate-action]'
+  ;; `C-home'  instead of `\\[icicle-previous-prefix-candidate-action]'
   "Define COMMAND with DOC-STRING based on FUNCTION.
 COMMAND is a symbol.  DOC-STRING is a string.
 FUNCTION is a function that takes one file-name or directory-name
@@ -453,10 +459,12 @@ these keys with prefix `C-' are active:
 
 \\<minibuffer-local-completion-map>\
 `C-mouse-2', `C-RET' - Act on current completion candidate only
-`C-down'  - Move to next prefix-completion candidate and act
-`C-up'    - Move to previous prefix-completion candidate and act
+`C-down', `C-wheel-down' - Move to next completion candidate and act
+`C-up', `C-wheel-up' - Move to previous completion candidate and act
 `C-next'  - Move to next apropos-completion candidate and act
 `C-prior' - Move to previous apropos-completion candidate and act
+`C-end'   - Move to next prefix-completion candidate and act
+`C-home'  - Move to previous prefix-completion candidate and act
 `\\[icicle-all-candidates-action]'     - Act on *all* candidates, successively (careful!)
 
 When candidate action and cycling are combined (e.g. `C-next'), user

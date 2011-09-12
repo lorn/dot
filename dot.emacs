@@ -14,7 +14,6 @@
 (load "~/.libemacs/lib/haskell-mode/haskell-site-file")
 (epa-file-enable)
 
-
 (when (not (boundp 'ac-dictionary-directories)) (setq ac-dictionary-directories ()))
 (add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
 (require 'auto-complete-config)
