@@ -71,7 +71,7 @@
 (setq-default erc-kill-server-buffer-on-quit t)
 (setq-default erc-track-exclude-types (quote ("JOIN" "NICK" "PART" "QUIT" "MODE" "324" "329" "332" "333" "353" "477")))
 (setq-default erc-timestamp-right-align-by-pixel t)
-(setq-default erc-nick (quote ("dsouza" "_dsouza_" "__dsouza__")))
+(setq-default erc-nick (quote ("Lorn" "Lorn_")))
 (setq-default uniquify-buffer-name-style 'post-forward)
 (setq-default uniquify-strip-common-suffix nil)
 (setq-default ac-auto-show-menu nil)
@@ -126,7 +126,10 @@
 (put 'set-goal-column 'disabled nil)
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+(add-to-list 'auto-mode-alist '("\\.t$"  . cperl-mode))
 
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t) 
 (setq auto-mode-alist (cons '("\\.text" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
+
+(set-face-attribute 'default nil :height 140)

@@ -6,6 +6,8 @@
   diff = auto
   status = auto
   branch = auto
+  interactive = auto
+  ui = true
 
 [alias]
   st = status -s
@@ -17,3 +19,11 @@
   push = stash
   pop  = stash pop
   xlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+
+[apply]
+	whitespace=fix
+
+[core]
+	editor = /usr/bin/vim
+	#excludesfile = ~/.gitignore
+	pager = less -FRSX
