@@ -1,6 +1,6 @@
 (add-to-list 'load-path "~/.libemacs/lib/icicles")
 (add-to-list 'load-path "~/.libemacs/lib/")
-(autoload 'js2-mode "js2" nil t)
+(autoload 'js2-mode "js2-mode" nil t)
 (require 'fuzzy-match)
 (require 'synonyms)
 (require 'icicles)
