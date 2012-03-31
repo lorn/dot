@@ -135,7 +135,7 @@
 (set-face-attribute 'default nil :height 140)
 
 ; erlang-mode
-(setq load-path (cons  "/usr/local/Cellar/erlang/R1/lib/erlang/lib/tools-2.6.6.3/emacs"
+(setq load-path (cons  "/usr/local/Cellar/erlang/R1/lib/erlang/lib/tools/emacs"
                        load-path))
 (setq erlang-root-dir "/usr/local/Cellar/erlang/")
 (setq exec-path (cons "/usr/local/Cellar/erlang/R1/bin" exec-path))

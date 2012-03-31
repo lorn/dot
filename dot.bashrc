@@ -54,3 +54,5 @@ my_exp_env
 my_switch2zsh
 
 export GPG_TTY=$(tty)
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

@@ -56,3 +56,5 @@ my_exp_env()
 my_exp_env
 my_exe_ext
 my_mnt_sec
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
