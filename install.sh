@@ -69,7 +69,7 @@ dot_clone_vim()
 dot_install_dot()
 {
   print_info "INSTALLING DOT FILES"
-  $ln_bin -s -f -n "$HOME/.dot/dot.emacs" "$HOME/.emacs"
+  $ln_bin -s -f -n "$HOME/.dot/dot.emacs.d" "$HOME/.emacs.d"
   $ln_bin -s -f -n "$HOME/.dot/dot.libemacs" "$HOME/.libemacs"
   $ln_bin -s -f -n "$HOME/.dot/dot.viper" "$HOME/.viper"
   $ln_bin -s -f -n "$HOME/.dot/dot.vim" "$HOME/.vim"
