@@ -1,3 +1,38 @@
+#+TITLE: My Emacs Configuration
+#+OPTIONS: toc:t
+#+POSTID: 29
+#+DATE: [2012-04-15 Syn 13:04]
+* Paths                                                            :noexport:
+When emacs runs external utilities, it runs a bare shell without loading
+init files like .bashrc, so you have to set the paths up manually.
+
+I mostly use binaries installed in a perl build managed by [[http://search.cpan.org/dist/App-perlbrew/][perlbrew]] and the
+binaries installed by [[http://www.macports.org/][macports]], the following settings have worked for me so
+far:
+
+#+begin_src emacs-lisp
+  (setenv "PATH"
+          (mapconcat 'identity
+                     (mapcar 'expand-file-name
+                             '("~/perl5/perlbrew/bin"
+                               "~/perl5/perlbrew/perls/current/bin"
+                               "~/perl5/bin"
+                               "~/bin"
+                               "/opt/local/bin"
+                               "/usr/local/bin"
+                               "/usr/bin"
+                               "/bin")
+                             )
+                     ":"))
+  (add-to-list 'exec-path "/usr/local/bin")
+  (add-to-list 'exec-path (expand-file-name "~/perl5/perlbrew/bin"))
+  (add-to-list 'exec-path (expand-file-name "~/perl5/perlbrew/perls/current/bin"))
+  (add-to-list 'exec-path "/opt/local/bin")
+  (add-to-list 'exec-path (expand-file-name "~/bin"))
+#+end_src
+
+* Library
+** Some libs
 #+begin_src emacs-lisp
 
 (add-to-list 'load-path "~/.libemacs/lib/icicles")
@@ -20,7 +55,11 @@
 (add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
+#+end_src
 
+* others things
+** not commented 
+#+begin_src emacs-lisp
 (eval-after-load "color-theme"
   '(progn
      (color-theme-initialize)
