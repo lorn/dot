@@ -1,3 +1,4 @@
+** Load library
 #+begin_src emacs-lisp
 (add-to-list 'load-path "~/.libemacs/lib/icicles")
 (add-to-list 'load-path "~/.libemacs/lib/")
@@ -19,7 +20,9 @@
 (add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
-
+#+end_src 
+** Theme conf
+#+begin_src emacs-lisp
 (eval-after-load "color-theme"
   '(progn
      (color-theme-initialize)
@@ -28,7 +31,10 @@
 (set-face-background 'col-highlight zenburn-bg-1)
 (set-face-attribute 'mode-line nil :box nil)
 (fset 'yes-or-no-p 'y-or-n-p)
+#+end_src
 
+** To comment ... :/
+#+being_src emacs-lisp
 (show-paren-mode t)
 ; (show-ws-toggle-show-hard-spaces)
 ; (show-ws-toggle-show-tabs)
@@ -134,15 +140,20 @@
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
 (set-face-attribute 'default nil :height 140)
+#+end_src
 
+** Erlang conf
+#+begin_src emacs-lisp
 ; erlang-mode
 (setq load-path (cons  "/usr/local/Cellar/erlang/R1/lib/erlang/lib/tools/emacs"
                        load-path))
 (setq erlang-root-dir "/usr/local/Cellar/erlang/")
 (setq exec-path (cons "/usr/local/Cellar/erlang/R1/bin" exec-path))
 (require 'erlang-start)
+#+end_src
 
-
+** Org/GTD config
+#+being_src emacs-lisp
 (setq org-modules
       '(org-bbdb
         org-gnus
