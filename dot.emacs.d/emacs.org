@@ -1,5 +1,41 @@
 ** Load library
+#+TITLE: My Emacs Configuration
+#+OPTIONS: toc:t
+#+POSTID: 29
+#+DATE: [2012-04-15 Syn 13:04]
+* Paths                                                            :noexport:
+When emacs runs external utilities, it runs a bare shell without loading
+init files like .bashrc, so you have to set the paths up manually.
+
+I mostly use binaries installed in a perl build managed by [[http://search.cpan.org/dist/App-perlbrew/][perlbrew]] and the
+binaries installed by [[http://www.macports.org/][macports]], the following settings have worked for me so
+far:
+
 #+begin_src emacs-lisp
+  (setenv "PATH"
+          (mapconcat 'identity
+                     (mapcar 'expand-file-name
+                             '("~/perl5/perlbrew/bin"
+                               "~/perl5/perlbrew/perls/current/bin"
+                               "~/perl5/bin"
+                               "~/bin"
+                               "/opt/local/bin"
+                               "/usr/local/bin"
+                               "/usr/bin"
+                               "/bin")
+                             )
+                     ":"))
+  (add-to-list 'exec-path "/usr/local/bin")
+  (add-to-list 'exec-path (expand-file-name "~/perl5/perlbrew/bin"))
+  (add-to-list 'exec-path (expand-file-name "~/perl5/perlbrew/perls/current/bin"))
+  (add-to-list 'exec-path "/opt/local/bin")
+  (add-to-list 'exec-path (expand-file-name "~/bin"))
+#+end_src
+
+* Library
+** Some libs
+#+begin_src emacs-lisp
+
 (add-to-list 'load-path "~/.libemacs/lib/icicles")
 (add-to-list 'load-path "~/.libemacs/lib/")
 (autoload 'js2-mode "js2-mode" nil t)
@@ -20,8 +56,14 @@
 (add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
+<<<<<<< HEAD
 #+end_src 
 ** Theme conf
+=======
+#+end_src
+
+* others things
+** not commented 
 #+begin_src emacs-lisp
 (eval-after-load "color-theme"
   '(progn
@@ -492,3 +534,14 @@ Late deadlines first, then scheduled, then non-late deadlines"
 ; TAB shows the next level of targets etc
 (setq org-outline-path-complete-in-steps t)
 #+end_src
+* Org-moode
+** mobileapp
+#+begin_src emacs-lisp
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/org")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/todo.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+#+end_src
+   
