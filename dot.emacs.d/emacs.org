@@ -56,10 +56,6 @@ far:
 (add-to-list 'ac-dictionary-directories "~/.libemacs/lib/ac-dict")
 (require 'auto-complete-config)
 (ac-config-default)
-<<<<<<< HEAD
-#+end_src 
-** Theme conf
-=======
 #+end_src
 
 * others things
