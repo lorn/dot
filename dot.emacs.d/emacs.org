@@ -69,10 +69,6 @@ far:
 (set-face-background 'col-highlight zenburn-bg-1)
 (set-face-attribute 'mode-line nil :box nil)
 (fset 'yes-or-no-p 'y-or-n-p)
-#+end_src
-
-** To comment ... :/
-#+being_src emacs-lisp
 (show-paren-mode t)
 ; (show-ws-toggle-show-hard-spaces)
 ; (show-ws-toggle-show-tabs)
