@@ -90,6 +90,7 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dot/dot.esig" "$HOME/.esig"
   $ln_bin -s -f -n "$HOME/.vim_confs" "$HOME/.vim"
   $ln_bin -s -f -n "$HOME/.vim_confs/vimrc" "$HOME/.vimrc"
+  $ln_bin -s -f -n "$HOME/.dot/dot.rspec.opts" "$HOME/.rspec.opts"
 }
 
 dot_install_zsh()

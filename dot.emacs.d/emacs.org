@@ -188,6 +188,9 @@ far:
 
 ** Org/GTD config
 #+being_src emacs-lisp
+;; isso aí vai ativar uma série de comandos de uma tecla só
+;; quando o cursor estiver em cima das "**"
+(setq org-use-speed-commands t) 
 (setq org-modules
       '(org-bbdb
         org-gnus
