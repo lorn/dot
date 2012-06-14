@@ -38,6 +38,7 @@ far:
 
 (add-to-list 'load-path "~/.libemacs/lib/icicles")
 (add-to-list 'load-path "~/.libemacs/lib/")
+(add-to-list 'load-path "~/.libemacs/lib/Enhanced-Ruby-Mode") ;
 (autoload 'js2-mode "js2-mode" nil t)
 (require 'fuzzy-match)
 (require 'synonyms)
@@ -185,7 +186,24 @@ far:
 (setq exec-path (cons "/usr/local/Cellar/erlang/R1/bin" exec-path))
 (require 'erlang-start)
 #+end_src
-
+** UTF-8 conf
+   ;;;;;;;;;;;;;;;;;;;;
+   ;; set up unicode
+   (prefer-coding-system       'utf-8)
+   (set-default-coding-systems 'utf-8)
+   (set-terminal-coding-system 'utf-8)
+   (set-keyboard-coding-system 'utf-8)
+   ;; This from a japanese individual.  I hope it works.
+   (setq default-buffer-file-coding-system 'utf-8)
+   ;; From Emacs wiki
+   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+   ;; MS Windows clipboard is UTF-16LE 
+(set-clipboard-coding-system 'utf-16le-dos)
+** Ruby conf
+#+begin_src emacs-lisp
+(setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ; 
+(require 'ruby-mode)
+#+end_src
 ** Org/GTD config
 #+being_src emacs-lisp
 ;; isso aí vai ativar uma série de comandos de uma tecla só
