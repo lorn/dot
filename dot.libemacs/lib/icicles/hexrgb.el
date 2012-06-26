@@ -4,12 +4,12 @@
 ;; Description: Functions to manipulate colors, including RGB hex strings.
 ;; Author: Drew Adams
 ;; Maintainer: Drew Adams
-;; Copyright (C) 2004-2010, Drew Adams, all rights reserved.
+;; Copyright (C) 2004-2012, Drew Adams, all rights reserved.
 ;; Created: Mon Sep 20 22:58:45 2004
 ;; Version: 21.0
-;; Last-Updated: Fri Jan 15 13:18:01 2010 (-0800)
+;; Last-Updated: Sat Mar 17 19:00:37 2012 (-0700)
 ;;           By: dradams
-;;     Update #: 733
+;;     Update #: 897
 ;; URL: http://www.emacswiki.org/cgi-bin/wiki/hexrgb.el
 ;; Keywords: number, hex, rgb, color, background, frames, display
 ;; Compatibility: GNU Emacs: 20.x, 21.x, 22.x, 23.x
@@ -26,10 +26,11 @@
 ;;
 ;;  This library provides functions for converting between RGB (red,
 ;;  green, blue) color components and HSV (hue, saturation, value)
-;;  color components.  It helps you convert among Emacs color values
-;;  (whole numbers from 0 through 65535), RGB and HSV floating-point
-;;  components (0.0 through 1.0), Emacs color-name strings (such as
-;;  "blue"), and hex RGB color strings (such as "#FC43A7912").
+;;  color components.  It helps you convert among Emacs color
+;;  components (whole numbers from 0 through 65535), RGB and HSV
+;;  floating-point components (0.0 through 1.0), Emacs color-name
+;;  strings (such as "blue"), and hex RGB color strings (such as
+;;  "#FC43A7912").
 ;;
 ;;  An RGB hex string, such as used as a frame `background-color'
 ;;  property, is a string of 1 + (3 * n) characters, the first of
@@ -61,13 +62,15 @@
 ;;    `hexrgb-defined-colors-alist',
 ;;    `hexrgb-delete-whitespace-from-string',
 ;;    `hexrgb-float-to-color-value', `hexrgb-hex-char-to-integer',
-;;    `hexrgb-hex-to-color-values', `hexrgb-hex-to-hsv',
-;;    `hexrgb-hex-to-rgb', `hexrgb-hsv-to-hex', `hexrgb-hex-to-int',
-;;    `hexrgb-hsv-to-rgb', `hexrgb-increment-blue',
-;;    `hexrgb-increment-equal-rgb', `hexrgb-increment-green',
-;;    `hexrgb-increment-hex', `hexrgb-increment-red',
-;;    `hexrgb-int-to-hex', `hexrgb-rgb-hex-string-p',
-;;    `hexrgb-rgb-to-hex', `hexrgb-rgb-to-hsv'.
+;;    `hexrgb-hex-to-color-values', `hexrgb-hex-to-hex',
+;;    `hexrgb-hex-to-hsv', `hexrgb-hex-to-rgb', `hexrgb-hsv-to-hex',
+;;    `hexrgb-hex-to-int', `hexrgb-hsv-to-rgb',
+;;    `hexrgb-increment-blue', `hexrgb-increment-equal-rgb',
+;;    `hexrgb-increment-green', `hexrgb-increment-hex',
+;;    `hexrgb-increment-red', `hexrgb-int-to-hex', `hexrgb-blue-hex',
+;;    `hexrgb-green-hex', `hexrgb-red-hex', `hexrgb-rgb-hex-string-p',
+;;    `hexrgb-rgb-hex-to-rgb-hex', `hexrgb-rgb-to-hex',
+;;    `hexrgb-rgb-to-hsv'.
 ;;
 ;;
 ;;  Add this to your initialization file (~/.emacs or ~/_emacs):
@@ -79,8 +82,29 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
-;;; Change log:
+;;; Change Log:
 ;;
+;; 2012/03/17 dadams
+;;     Added: hexrgb-(red|green|blue-hex, hexrgb-rgb-hex-to-rgb-hex, hexrgb-hex-to-hex.
+;; 2012/01/05 dadams
+;;     hexrgb-complement: Added optional arg MSG-P.
+;;     Some doc-string cleanup.
+;; 2011/11/26 dadams
+;;     hexrgb-read-color: Changed arg order to match vanilla Emacs read-color.  Added MSGP.
+;;     *** THIS IS AN INCOMPATIBLE CHANGE.  IF YOU USE THIS FUNCTION THEN UPDATE YOUR CODE. ***
+;; 2011/02/16 dadams
+;;     hexrgb-increment-hex: INCOMPATIBLE CHANGE:
+;;                           Swapped order of args NB-DIGITS, INCREMENT, to fit other functions.
+;;     hexrgb-increment-*: Took the change to hexrgb-increment-hex into account.
+;;     Improved various doc strings.
+;; 2011/01/08 dadams
+;;     Restored autoload cookie for eval-and-compile hexrgb-canonicalize-defined-colors.
+;; 2011/01/03 dadams
+;;     Removed autoload cookies from non-interactive functions.
+;; 2010/12/18 dadams
+;;     hexrgb-canonicalize-defined-colors: Added autoload cookie.  Thx to Richard Kim.
+;; 2010/12/06 dadams
+;;     hexrgb-hex-to-color-values: Correct start offset for blue.  Thx to "Linda" on Emacs Wiki.
 ;; 2009/11/14 dadams
 ;;    hexrgb-rgb-to-hsv: Corrected hue when > 1.0.  Use strict inequality for hue limit tests.
 ;;    hexrgb-approx-equal: Convert RFUZZ and AFUZZ to their absolute values.
@@ -156,7 +180,7 @@
 ;;
 ;;; Code:
 
-(eval-when-compile (require 'cl)) ;; case; plus, for Emacs < 20: when, unless
+(eval-when-compile (require 'cl)) ;; case
 
 ;; Unless you first load `hexrgb.el', then either `palette.el' or `eyedropper.el', you will get
 ;; warnings about variables and functions with prefix `eyedrop-' when you byte-compile
@@ -167,6 +191,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+;;;###autoload
 (eval-and-compile
  (defun hexrgb-canonicalize-defined-colors (list)
    "Copy of LIST with color names canonicalized.
@@ -257,8 +282,8 @@ are lowercased, whitespace is removed, and there are no duplicates."
 
 ;; RMS added this function to Emacs (23) as `read-color', with some feature loss.
 ;;;###autoload
-(defun hexrgb-read-color (&optional convert-to-RGB-p allow-empty-name-p prompt)
-  "Read a color name or RGB hex value: #RRRRGGGGBBBB.
+(defun hexrgb-read-color (&optional prompt convert-to-RGB-p allow-empty-name-p msgp)
+  "Read a color name or hex RGB hexadecimal color value #RRRRGGGGBBBB.
 Completion is available for color names, but not for RGB hex strings.
 If you input an RGB hex string, it must have the form #XXXXXXXXXXXX or
 XXXXXXXXXXXX, where each X is a hex digit.  The number of Xs must be a
@@ -286,6 +311,8 @@ color is used.
 \(You can copy a color using eyedropper commands such as
 `eyedrop-pick-foreground-at-mouse'.)
 
+Optional arg PROMPT is the prompt - nil means use a default prompt.
+
 Checks input to be sure it represents a valid color.  If not, raises
 an error (but see exception for empty input with non-nil
 ALLOW-EMPTY-NAME-P).
@@ -296,12 +323,12 @@ an input color name to an RGB hex string.  Returns the RGB hex string.
 Optional arg ALLOW-EMPTY-NAME-P controls what happens if you enter an
 empty color name (that is, you just hit `RET').  If non-nil, then
 `hexrgb-read-color' returns an empty color name, \"\".  If nil, then
-it raises an error.  Programs must test for \"\" if ALLOW-EMPTY-NAME-P
-is non-nil.  They can then perform an appropriate action in case of
-empty input.
+it raises an error.  Calling programs must test for \"\" if
+ALLOW-EMPTY-NAME-P is non-nil.  They can then perform an appropriate
+action in case of empty input.
 
-Optional arg PROMPT is the prompt.  Nil means use a default prompt."
-  (interactive "p")                     ; Always convert to RGB interactively.
+Interactively, or with non-nil MSGP, show color name in the echo area."
+  (interactive "i\np\ni\np")             ; Always convert to RGB interactively.
   (let* ((completion-ignore-case  t)
          ;; Free variables here: `eyedrop-picked-foreground', `eyedrop-picked-background'.
          ;; They are defined in library `palette.el' or library `eyedropper.el'.
@@ -345,10 +372,9 @@ Optional arg PROMPT is the prompt.  Nil means use a default prompt."
                          (try-completion color colors))))
           (error "No such color: %S" color))
         (when convert-to-RGB-p (setq color  (hexrgb-color-name-to-hex color))))
-      (when (interactive-p) (message "Color: `%s'" color))
+      (when msgp (message "Color: `%s'" color))
       color)))
 
-;;;###autoload
 (defun hexrgb-rgb-hex-string-p (color &optional laxp)
   "Non-nil if COLOR is an RGB string #XXXXXXXXXXXX.
 Each X is a hex digit.  The number of Xs must be a multiple of 3, with
@@ -361,15 +387,17 @@ returned; otherwise, t is returned."
       (and laxp (string-match "^\\([a-fA-F0-9][a-fA-F0-9][a-fA-F0-9]\\)+$" color) t)))
 
 ;;;###autoload
-(defun hexrgb-complement (color)
-  "Return the color that is the complement of COLOR."
-  (interactive (list (hexrgb-read-color)))
+(defun hexrgb-complement (color &optional msg-p)
+  "Return the color that is the complement of COLOR.
+Non-interactively, non-nil optional arg MSG-P means show a message
+with the complement."
+  (interactive (list (hexrgb-read-color) t))
   (setq color  (hexrgb-color-name-to-hex color))
   (let ((red    (hexrgb-red color))
         (green  (hexrgb-green color))
         (blue   (hexrgb-blue color)))
     (setq color  (hexrgb-rgb-to-hex (- 1.0 red) (- 1.0 green) (- 1.0 blue))))
-  (when (interactive-p) (message "Complement: `%s'" color))
+  (when msg-p (message "Complement: `%s'" color))
   color)
 
 ;;;###autoload
@@ -427,7 +455,6 @@ COLOR is a color name or hex RGB string that starts with \"#\"."
     (/ (hexrgb-hex-to-int (substring color start (+ start len)))
        (expt 16.0 (/ (1- (length color)) 3.0)))))
 
-;;;###autoload
 (defun hexrgb-rgb-to-hsv (red green blue)
   "Convert RED, GREEN, BLUE components to HSV (hue, saturation, value).
 Each input component is 0.0 to 1.0, inclusive.
@@ -464,7 +491,6 @@ Returns a list of HSV components of value 0.0 to 1.0, inclusive."
               saturation  0.0)))
     (list hue saturation value)))
 
-;;;###autoload
 (defun hexrgb-hsv-to-rgb (hue saturation value)
   "Convert HUE, SATURATION, VALUE components to RGB (red, green, blue).
 Each input component is 0.0 to 1.0, inclusive.
@@ -501,7 +527,6 @@ Returns a list of RGB components of value 0.0 to 1.0, inclusive."
                          blue   qq))))
     (list red green blue)))
 
-;;;###autoload
 (defun hexrgb-hsv-to-hex (hue saturation value)
   "Return the hex RBG color string for inputs HUE, SATURATION, VALUE.
 The inputs are each in the range 0 to 1.
@@ -509,7 +534,6 @@ The output string is of the form \"#RRRRGGGGBBBB\"."
   (hexrgb-color-values-to-hex
    (mapcar (lambda (x) (floor (* x 65535.0))) (hexrgb-hsv-to-rgb hue saturation value))))
 
-;;;###autoload
 (defun hexrgb-rgb-to-hex (red green blue)
   "Return the hex RBG color string for inputs RED, GREEN, BLUE.
 The inputs are each in the range 0 to 1.
@@ -517,7 +541,6 @@ The output string is of the form \"#RRRRGGGGBBBB\"."
   (hexrgb-color-values-to-hex
    (mapcar (lambda (x) (floor (* x 65535.0))) (list red green blue))))
 
-;;;###autoload
 (defun hexrgb-hex-to-hsv (color)
   "Return a list of HSV (hue, saturation, value) color components.
 Each component is a value from 0.0 to 1.0, inclusive.
@@ -527,7 +550,6 @@ components."
   (let ((rgb-components  (hexrgb-hex-to-rgb color)))
     (apply #'hexrgb-rgb-to-hsv rgb-components)))
 
-;;;###autoload
 (defun hexrgb-hex-to-rgb (color)
   "Return a list of RGB (red, green, blue) color components.
 Each component is a value from 0.0 to 1.0, inclusive.
@@ -540,7 +562,6 @@ components."
           (/ (hexrgb-hex-to-int (substring color (1+ len) (+ 1 len len))) 65535.0)
           (/ (hexrgb-hex-to-int (substring color (+ 1 len len))) 65535.0))))
 
-;;;###autoload
 (defun hexrgb-color-name-to-hex (color)
   "Return the RGB hex string for the COLOR name, starting with \"#\".
 If COLOR is already a string starting with \"#\", then just return it."
@@ -550,24 +571,21 @@ If COLOR is already a string starting with \"#\", then just return it."
       (setq color  (hexrgb-color-values-to-hex components))))
   color)
 
-;; Just hard-code 4 as the number of hex digits, since `x-color-values'
-;; seems to produce appropriate integer values for this value.
-;;
 ;; Color "components" would be better in the name than color "value"
 ;; but this name follows the Emacs tradition (e.g. `x-color-values',
 ;; 'ps-color-values', `ps-e-x-color-values').
-;;;###autoload
-(defun hexrgb-color-values-to-hex (values)
-  "Convert list of rgb color VALUES to a hex string, #XXXXXXXXXXXX.
+(defun hexrgb-color-values-to-hex (components)
+  "Convert list of rgb color COMPONENTS to a hex string, #XXXXXXXXXXXX.
 Each X in the string is a hexadecimal digit.
-Input VALUES is as for the output of `x-color-values'."
-  (concat "#" (hexrgb-int-to-hex (nth 0 values) 4) ; red
-          (hexrgb-int-to-hex (nth 1 values) 4) ; green
-          (hexrgb-int-to-hex (nth 2 values) 4))) ; blue
+Input COMPONENTS is as for the output of `x-color-values'."
+;; Just hard-code 4 as the number of hex digits, since `x-color-values'
+;; seems to produce appropriate integer values for `4'.
+  (concat "#" (hexrgb-int-to-hex (nth 0 components) 4) ; red
+          (hexrgb-int-to-hex (nth 1 components) 4) ; green
+          (hexrgb-int-to-hex (nth 2 components) 4))) ; blue
 
-;;;###autoload
 (defun hexrgb-hex-to-color-values (color)
-  "Convert hex COLOR to a list of rgb color values.
+  "Convert hex COLOR to a list of RGB color components.
 COLOR is a hex rgb color string, #XXXXXXXXXXXX
 Each X in the string is a hexadecimal digit.  There are 3N X's, N > 0.
 The output list is as for `x-color-values'."
@@ -583,66 +601,67 @@ The output list is as for `x-color-values'."
     (setq color  (substring color (match-beginning 2) (match-end 2))
           red    (hexrgb-hex-to-int (substring color 0 ndigits))
           green  (hexrgb-hex-to-int (substring color ndigits (* 2 ndigits)))
-          blue   (hexrgb-hex-to-int (substring color ndigits (* 3 ndigits))))
+          blue   (hexrgb-hex-to-int (substring color (* 2 ndigits) (* 3 ndigits))))
     (list red green blue)))
     
-;;;###autoload
 (defun hexrgb-increment-red (hex nb-digits increment &optional wrap-p)
-  "Increment red value of rgb string HEX by INCREMENT.
+  "Increment red component of rgb string HEX by INCREMENT.
 String HEX starts with \"#\".  Each color is NB-DIGITS hex digits long.
-If optional arg WRAP-P is non-nil, then the result wraps around zero.
-For example, incrementing \"#FFFFFFFFF\" by 1 will cause it to wrap
-around to \"#000000000\"."
+If optional arg WRAP-P is non-nil then the result wraps around zero.
+  For example, with NB-DIGITS 3, incrementing \"#fffffffff\" by 1
+  causes it to wrap around to \"#000ffffff\"."
   (concat "#"
-          (hexrgb-increment-hex (substring hex 1 (1+ nb-digits)) increment nb-digits wrap-p)
+          (hexrgb-increment-hex (substring hex 1 (1+ nb-digits)) nb-digits increment wrap-p)
           (substring hex (1+ nb-digits) (1+ (* nb-digits 2)))
           (substring hex (1+ (* nb-digits 2)))))
 
-;;;###autoload
 (defun hexrgb-increment-green (hex nb-digits increment &optional wrap-p)
-  "Increment green value of rgb string HEX by INCREMENT.
+  "Increment green component of rgb string HEX by INCREMENT.
 String HEX starts with \"#\".  Each color is NB-DIGITS hex digits long.
-For example, incrementing \"#FFFFFFFFF\" by 1 will cause it to wrap
-around to \"#000000000\"."
+If optional arg WRAP-P is non-nil then the result wraps around zero.
+  For example, with NB-DIGITS 3, incrementing \"#fffffffff\" by 1
+  causes it to wrap around to \"#fff000fff\"."
   (concat
    "#" (substring hex 1 (1+ nb-digits))
    (hexrgb-increment-hex (substring hex (1+ nb-digits) (1+ (* nb-digits 2)))
-                         increment
                          nb-digits
+                         increment
                          wrap-p)
    (substring hex (1+ (* nb-digits 2)))))
 
-;;;###autoload
 (defun hexrgb-increment-blue (hex nb-digits increment &optional wrap-p)
-  "Increment blue value of rgb string HEX by INCREMENT.
+  "Increment blue component of rgb string HEX by INCREMENT.
 String HEX starts with \"#\".  Each color is NB-DIGITS hex digits long.
-For example, incrementing \"#FFFFFFFFF\" by 1 will cause it to wrap
-around to \"#000000000\"."
+If optional arg WRAP-P is non-nil then the result wraps around zero.
+  For example, with NB-DIGITS 3, incrementing \"#fffffffff\" by 1
+  causes it to wrap around to \"#ffffff000\"."
   (concat "#" (substring hex 1 (1+ (* nb-digits 2)))
           (hexrgb-increment-hex (substring hex (1+ (* nb-digits 2)))
-                                increment
                                 nb-digits
+                                increment
                                 wrap-p)))
 
-;;;###autoload
 (defun hexrgb-increment-equal-rgb (hex nb-digits increment &optional wrap-p)
-  "Increment each color value (r,g,b) of rgb string HEX by INCREMENT.
+  "Increment each color component (r,g,b) of rgb string HEX by INCREMENT.
 String HEX starts with \"#\".  Each color is NB-DIGITS hex digits long.
-For example, incrementing \"#FFFFFFFFF\" by 1 will cause it to wrap
-around to \"#000000000\"."
+If optional arg WRAP-P is non-nil then the result wraps around zero.
+  For example, with NB-DIGITS 3, incrementing \"#fffffffff\" by 1
+  causes it to wrap around to \"#000000000\"."
   (concat
-   "#" (hexrgb-increment-hex (substring hex 1 (1+ nb-digits)) increment nb-digits wrap-p)
+   "#"
+   (hexrgb-increment-hex (substring hex 1 (1+ nb-digits)) nb-digits increment wrap-p)
    (hexrgb-increment-hex (substring hex (1+ nb-digits) (1+ (* nb-digits 2)))
-                         increment
                          nb-digits
+                         increment
                          wrap-p)
-   (hexrgb-increment-hex (substring hex (1+ (* nb-digits 2))) increment nb-digits wrap-p)))
+   (hexrgb-increment-hex (substring hex (1+ (* nb-digits 2))) nb-digits increment wrap-p)))
 
-;;;###autoload
-(defun hexrgb-increment-hex (hex increment nb-digits &optional wrap-p)
-  "Increment HEX number (a string NB-DIGITS long) by INCREMENT.
-For example, incrementing \"FFFFFFFFF\" by 1 will cause it to wrap
-around to \"000000000\"."
+(defun hexrgb-increment-hex (hex nb-digits increment &optional wrap-p)
+  "Increment hexadecimal-digits string HEX by INCREMENT.
+Only the first NB-DIGITS of HEX are used.
+If optional arg WRAP-P is non-nil then the result wraps around zero.
+  For example, with NB-DIGITS 3, incrementing \"fff\" by 1 causes it
+  to wrap around to \"000\"."
   (let* ((int      (hexrgb-hex-to-int hex))
          (new-int  (+ increment int)))
     (if (or wrap-p
@@ -652,7 +671,6 @@ around to \"000000000\"."
         (hexrgb-int-to-hex new-int nb-digits) ; Use incremented number.
       hex)))                            ; Don't increment.
 
-;;;###autoload
 (defun hexrgb-hex-to-int (hex)
   "Convert HEX string argument to an integer.
 The characters of HEX must be hex characters."
@@ -667,7 +685,6 @@ The characters of HEX must be hex characters."
     int))
 
 ;; From `hexl.el'.  This is the same as `hexl-hex-char-to-integer' defined there.
-;;;###autoload
 (defun hexrgb-hex-char-to-integer (character)
   "Take a CHARACTER and return its value as if it were a hex digit."
   (if (and (>= character ?0) (<= character ?9))
@@ -680,7 +697,6 @@ The characters of HEX must be hex characters."
 ;; Originally, I used the code from `int-to-hex-string' in `float.el'.
 ;; This version is thanks to Juri Linkov <juri@jurta.org>.
 ;;
-;;;###autoload
 (defun hexrgb-int-to-hex (int &optional nb-digits)
   "Convert integer argument INT to a #XXXXXXXXXXXX format hex string.
 Each X in the output string is a hexadecimal digit.
@@ -692,7 +708,6 @@ the hex equivalent of 256 decimal is 100, which is more than 2 digits."
   (substring (format (concat "%0" (int-to-string nb-digits) "X") int) (- nb-digits)))
 
 ;; Inspired by Elisp Info manual, node "Comparison of Numbers".
-;;;###autoload
 (defun hexrgb-approx-equal (x y &optional rfuzz afuzz)
   "Return non-nil if numbers X and Y are approximately equal.
 RFUZZ is a relative fuzz factor.  AFUZZ is an absolute fuzz factor.
@@ -706,17 +721,73 @@ The algorithm is:
         afuzz  (abs afuzz))
   (< (abs (- x y)) (+ afuzz (* rfuzz (+ (abs x) (abs y))))))
 
-;;;###autoload
 (defun hexrgb-color-value-to-float (n)
-  "Return the floating-point equivalent of color value N.
+  "Return the floating-point equivalent of color-component value N.
 N must be an integer between 0 and 65535, or else an error is raised."
   (unless (and (wholenump n) (<= n 65535))
     (error "Not a whole number less than 65536"))
   (/ (float n) 65535.0))
 
-;;;###autoload
+(defun hexrgb-hex-to-hex (hex nb-digits)
+  "Return a hex string of NB-DIGITS digits, rounded from hex string HEX.
+Raise an error if HEX represents a number > `most-positive-fixnum'
+HEX is a hex string, not an RGB string.  It does not start with `#'."
+  (let* ((len      (length hex))
+         (digdiff  (- nb-digits len)))
+    (cond ((zerop digdiff)
+           hex)
+          ((natnump digdiff)
+           (let ((int  (hexrgb-hex-to-int hex)))
+             (unless (natnump int) (error "HEX number is too large"))
+             (format (concat "%0" (int-to-string len) "X" (make-string digdiff ?0)) int)))
+          (t
+           (let ((over  (substring hex digdiff)))
+             (setq hex  (substring hex 0 nb-digits))
+             (if (> (string-to-number over 16)
+                    (string-to-number (make-string (- digdiff) ?7) 16))
+                 (hexrgb-increment-hex hex nb-digits 1) ; Round up.
+               hex))))))
+
+(defun hexrgb-rgb-hex-to-rgb-hex (hex nb-digits)
+  "Trim or expand hex RGB string HEX to NB-DIGITS digits.
+HEX can optionally start with `#'.
+In that case, so does the return value."
+  (let* ((nb-sign-p  (eq ?# (aref hex 0)))
+         (hex+       (or (and nb-sign-p  hex)  (concat "#" hex)))
+         (red        (hexrgb-red-hex   hex+))
+         (green      (hexrgb-green-hex hex+))
+         (blue       (hexrgb-blue-hex  hex+)))
+    (format "%s%s%s%s"
+            (if nb-sign-p "#" "")
+            (hexrgb-hex-to-hex red   nb-digits)
+            (hexrgb-hex-to-hex green nb-digits)
+            (hexrgb-hex-to-hex blue  nb-digits))))
+
+(defun hexrgb-red-hex (hex)
+  "Return the red hex component for RGB string HEX.
+HEX can optionally start with `#'.  The return value does not."
+  (let* ((nb-sign-p  (eq ?# (aref hex 0)))
+         (hex-       (or (and nb-sign-p  (substring hex 1))  hex)))
+    (substring hex- 0 (/ (length hex-) 3))))
+
+(defun hexrgb-green-hex (hex)
+  "Return the green hex component for RGB string HEX.
+HEX can optionally start with `#'.  The return value does not."
+  (let* ((nb-sign-p  (eq ?# (aref hex 0)))
+         (hex-       (or (and nb-sign-p  (substring hex 1))  hex))
+         (len        (/ (length hex-) 3)))
+    (substring hex- len (* 2 len))))
+
+(defun hexrgb-blue-hex (hex)
+  "Return the blue hex component for RGB string HEX.
+HEX can optionally start with `#'.  The return value does not."
+  (let* ((nb-sign-p  (eq ?# (aref hex 0)))
+         (hex-       (or (and nb-sign-p  (substring hex 1))  hex))
+         (len        (/ (length hex-) 3)))
+    (substring hex- (* 2 len))))
+
 (defun hexrgb-float-to-color-value (x)
-  "Return the color value equivalent of floating-point number X.
+  "Return the color-component value equivalent of floating-point number X.
 X must be between 0.0 and 1.0, or else an error is raised."
   (unless (and (numberp x) (<= 0.0 x) (<= x 1.0))
     (error "Not a floating-point number between 0.0 and 1.0"))
