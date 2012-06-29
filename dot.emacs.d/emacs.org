@@ -204,6 +204,12 @@ far:
 (setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ; 
 (require 'ruby-mode)
 #+end_src
+** personal conf
+;; With numeric ARG, display the tool bar if and only if ARG is
+;; positive.  Tool bar has icons document (read file), folder (read
+;; directory), X (discard buffer), disk (save), disk+pen (save-as),
+;; back arrow (undo), scissors (cut), etc.
+(tool-bar-mode 0)
 ** Org/GTD config
 #+being_src emacs-lisp
 ;; isso aí vai ativar uma série de comandos de uma tecla só
