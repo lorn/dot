@@ -2,7 +2,7 @@
 #+TITLE: My Emacs Configuration
 #+OPTIONS: toc:t
 #+POSTID: 29
-#+DATE: [2012-04-15 Syn 13:04]
+   #+DATE:
 * Paths                                                            :noexport:
 When emacs runs external utilities, it runs a bare shell without loading
 init files like .bashrc, so you have to set the paths up manually.
@@ -60,7 +60,7 @@ far:
 #+end_src
 
 * others things
-** not commented 
+** not commented
 #+begin_src emacs-lisp
 (eval-after-load "color-theme"
   '(progn
@@ -170,7 +170,7 @@ far:
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.t$"  . cperl-mode))
 
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t) 
+(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.text" . markdown-mode) auto-mode-alist))
 (setq auto-mode-alist (cons '("\\.markdown" . markdown-mode) auto-mode-alist))
 
@@ -197,24 +197,33 @@ far:
    (setq default-buffer-file-coding-system 'utf-8)
    ;; From Emacs wiki
    (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-   ;; MS Windows clipboard is UTF-16LE 
+   ;; MS Windows clipboard is UTF-16LE
 (set-clipboard-coding-system 'utf-16le-dos)
 ** Ruby conf
 #+begin_src emacs-lisp
-(setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ; 
+(setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ;
 (require 'ruby-mode)
 #+end_src
 ** personal conf
+#+begin_src emacs-lisp
 ;; With numeric ARG, display the tool bar if and only if ARG is
 ;; positive.  Tool bar has icons document (read file), folder (read
 ;; directory), X (discard buffer), disk (save), disk+pen (save-as),
 ;; back arrow (undo), scissors (cut), etc.
-(tool-bar-mode 0)
+(setq-default tool-bar-mode 0)
+
+;; git delete trailing whitespace
+ (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+end_src
+
+#+RESULTS:
+| delete-trailing-whitespace |
+
 ** Org/GTD config
 #+being_src emacs-lisp
 ;; isso aí vai ativar uma série de comandos de uma tecla só
 ;; quando o cursor estiver em cima das "**"
-(setq org-use-speed-commands t) 
+(setq org-use-speed-commands t)
 (setq org-modules
       '(org-bbdb
         org-gnus
@@ -563,4 +572,3 @@ Late deadlines first, then scheduled, then non-late deadlines"
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 #+end_src
-   
