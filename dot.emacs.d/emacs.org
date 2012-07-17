@@ -177,7 +177,19 @@ far:
 (set-face-attribute 'default nil :height 140)
 #+end_src
 
-** Erlang conf
+#+RESULTS:
+** HTML mode
+#+begin_src emacs-lisp
+(add-to-list 'auto-mode-alist '("\\.css$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.erb$" . html-mode))
+(add-to-list 'auto-mode-alist '("\\.tt$" . html-mode))
+
+#+end_src
+
+#+RESULTS:
+| (\.tt$ . html-mode) | (\.erb$ . html-mode) | (\.css$ . html-mode) | (\.hrl\' . erlang-mode) | (\.erl\' . erlang-mode) | (\.markdown . markdown-mode) | (\.text . markdown-mode) | (\.t$ . cperl-mode) | (\.js$ . js2-mode) | (\.l[gh]s\' . literate-haskell-mode) | (\.\(?:[gh]s\ | hi\)\' . haskell-mode) | (\.cabal\' . haskell-cabal-mode) | (\.hsc\' . haskell-c-mode) | (\.hcr\' . ghc-core-mode) | (\.gpg\(~\ | \.~[0-9]+~\)?\' nil epa-file) | (\.dz\' nil jka-compr) | (\.xz\' nil jka-compr) | (\.lzma\' nil jka-compr) | (\.lz\' nil jka-compr) | (\.g?z\' nil jka-compr) | (\.bz2\' nil jka-compr) | (\.Z\' nil jka-compr) | (\.vr[hi]?\' . vera-mode) | (\.rb\' . ruby-mode) | (\.re?st\' . rst-mode) | (\.py\' . python-mode) | (\.awk\' . awk-mode) | (\.\(u?lpc\ | pike\ | pmod\(.in\)?\)\' . pike-mode) | (\.idl\' . idl-mode) | (\.java\' . java-mode) | (\.m\' . objc-mode) | (\.ii\' . c++-mode) | (\.i\' . c-mode) | (\.lex\' . c-mode) | (\.y\(acc\)?\' . c-mode) | (\.[ch]\' . c-mode) | (\.\(CC?\ | HH?\)\' . c++-mode) | (\.[ch]\(pp\ | xx\ | \+\+\)\' . c++-mode) | (\.\(cc\ | hh\)\' . c++-mode) | (\.[sx]?html?\(\.[a-zA-Z_]+\)?\' . html-mode) | (\.svgz?\' . image-mode) | (\.svgz?\' . xml-mode) | (\.x[bp]m\' . image-mode) | (\.x[bp]m\' . c-mode) | (\.p[bpgn]m\' . image-mode) | (\.tiff?\' . image-mode) | (\.gif\' . image-mode) | (\.png\' . image-mode) | (\.jpe?g\' . image-mode) | (\.te?xt\' . text-mode) | (\.[tT]e[xX]\' . tex-mode) | (\.ins\' . tex-mode) | (\.ltx\' . latex-mode) | (\.dtx\' . doctex-mode) | (\.org\' . org-mode) | (\.el\' . emacs-lisp-mode) | (Project\.ede\' . emacs-lisp-mode) | (\.\(scm\ | stk\ | ss\ | sch\)\' . scheme-mode) | (\.l\' . lisp-mode) | (\.li?sp\' . lisp-mode) | (\.[fF]\' . fortran-mode) | (\.for\' . fortran-mode) | (\.p\' . pascal-mode) | (\.pas\' . pascal-mode) | (\.\(dpr\ | DPR\)\' . delphi-mode) | (\.ad[abs]\' . ada-mode) | (\.ad[bs].dg\' . ada-mode) | (\.\([pP]\([Llm]\ | erl\ | od\)\ | al\)\' . perl-mode) | (Imakefile\' . makefile-imake-mode) | (Makeppfile\(?:\.mk\)?\' . makefile-makepp-mode) | (\.makepp\' . makefile-makepp-mode) | (\.mk\' . makefile-bsdmake-mode) | (GNUmakefile\' . makefile-gmake-mode) | ([Mm]akefile\' . makefile-bsdmake-mode) | (\.am\' . makefile-automake-mode) | (\.texinfo\' . texinfo-mode) | (\.te?xi\' . texinfo-mode) | (\.[sS]\' . asm-mode) | (\.asm\' . asm-mode) | (\.css\' . css-mode) | (\.mixal\' . mixal-mode) | (\.gcov\' . compilation-mode) | (/\.[a-z0-9-]*gdbinit . gdb-script-mode) | ([cC]hange\.?[lL]og?\' . change-log-mode) | ([cC]hange[lL]og[-.][0-9]+\' . change-log-mode) | (\$CHANGE_LOG\$\.TXT . change-log-mode) | (\.scm\.[0-9]*\' . scheme-mode) | (\.[ck]?sh\'\ | \.shar\'\ | /\.z?profile\' . sh-mode) | (\.bash\' . sh-mode) | (\(/\ | \`\)\.\(bash_profile\ | z?login\ | bash_login\ | z?logout\)\' . sh-mode) | (\(/\ | \`\)\.\(bash_logout\ | shrc\ | [kz]shrc\ | bashrc\ | t?cshrc\ | esrc\)\' . sh-mode) | (\(/\ | \`\)\.\([kz]shenv\ | xinitrc\ | startxrc\ | xsession\)\' . sh-mode) | (\.m?spec\' . sh-mode) | (\.m[mes]\' . nroff-mode) | (\.man\' . nroff-mode) | (\.sty\' . latex-mode) | (\.cl[so]\' . latex-mode) | (\.bbl\' . latex-mode) | (\.bib\' . bibtex-mode) | (\.bst\' . bibtex-style-mode) | (\.sql\' . sql-mode) | (\.m[4c]\' . m4-mode) | (\.mf\' . metafont-mode) | (\.mp\' . metapost-mode) | (\.vhdl?\' . vhdl-mode) | (\.article\' . text-mode) | (\.letter\' . text-mode) | (\.i?tcl\' . tcl-mode) | (\.exp\' . tcl-mode) | (\.itk\' . tcl-mode) | (\.icn\' . icon-mode) | (\.sim\' . simula-mode) | (\.mss\' . scribe-mode) | (\.f9[05]\' . f90-mode) | (\.f0[38]\' . f90-mode) | (\.indent\.pro\' . fundamental-mode) | (\.\(pro\ | PRO\)\' . idlwave-mode) | (\.srt\' . srecode-template-mode) | (\.prolog\' . prolog-mode) | (\.tar\' . tar-mode) | (\.\(arc\ | zip\ | lzh\ | lha\ | zoo\ | [jew]ar\ | xpi\ | rar\ | 7z\ | ARC\ | ZIP\ | LZH\ | LHA\ | ZOO\ | [JEW]AR\ | XPI\ | RAR\ | 7Z\)\' . archive-mode) | (\.\(sx[dmicw]\ | od[fgpst]\ | oxt\)\' . archive-mode) | (\.\(deb\ | [oi]pk\)\' . archive-mode) | (\`/tmp/Re . text-mode) | (/Message[0-9]*\' . text-mode) | (\`/tmp/fol/ . text-mode) | (\.oak\' . scheme-mode) | (\.sgml?\' . sgml-mode) | (\.x[ms]l\' . xml-mode) | (\.dbk\' . xml-mode) | (\.dtd\' . sgml-mode) | (\.ds\(ss\)?l\' . dsssl-mode) | (\.js\' . js-mode) | (\.json\' . js-mode) | (\.[ds]?vh?\' . verilog-mode) | ([]>:/\]\..*\(emacs\ | gnus\ | viper\)\' . emacs-lisp-mode) | (\`\..*emacs\' . emacs-lisp-mode) | ([:/]_emacs\' . emacs-lisp-mode) | (/crontab\.X*[0-9]+\' . shell-script-mode) | (\.ml\' . lisp-mode) | (\.ld[si]?\' . ld-script-mode) | (ld\.?script\' . ld-script-mode) | (\.xs\' . c-mode) | (\.x[abdsru]?[cnw]?\' . ld-script-mode) | (\.zone\' . dns-mode) | (\.soa\' . dns-mode) | (\.asd\' . lisp-mode) | (\.\(asn\ | mib\ | smi\)\' . snmp-mode) | (\.\(as\ | mi\ | sm\)2\' . snmpv2-mode) | (\.\(diffs?\ | patch\ | rej\)\' . diff-mode) | (\.\(dif\ | pat\)\' . diff-mode) | (\.[eE]?[pP][sS]\' . ps-mode) | (\.\(?:PDF\ | DVI\ | OD[FGPST]\ | DOCX?\ | XLSX?\ | PPTX?\ | pdf\ | dvi\ | od[fgpst]\ | docx?\ | xlsx?\ | pptx?\)\' . doc-view-mode-maybe) | (configure\.\(ac\ | in\)\' . autoconf-mode) | (\.s\(v\ | iv\ | ieve\)\' . sieve-mode) | (BROWSE\' . ebrowse-tree-mode) | (\.ebrowse\' . ebrowse-tree-mode) | (#\*mail\* . mail-mode) | (\.g\' . antlr-mode) | (\.mod\' . m2-mode) | (\.ses\' . ses-mode) | (\.docbook\' . sgml-mode) | (\.com\' . dcl-mode) | (/config\.\(?:bat\ | log\)\' . fundamental-mode) | (\.\(?:[iI][nN][iI]\ | [lL][sS][tT]\ | [rR][eE][gG]\ | [sS][yY][sS]\)\' . conf-mode) | (\.\(?:desktop\ | la\)\' . conf-unix-mode) | (\.ppd\' . conf-ppd-mode) | (java.+\.conf\' . conf-javaprop-mode) | (\.properties\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-javaprop-mode) | (\`/etc/\(?:DIR_COLORS\ | ethers\ | .?fstab\ | .*hosts\ | lesskey\ | login\.?de\(?:fs\ | vperm\)\ | magic\ | mtab\ | pam\.d/.*\ | permissions\(?:\.d/.+\)?\ | protocols\ | rpc\ | services\)\' . conf-space-mode) | (\`/etc/\(?:acpid?/.+\ | aliases\(?:\.d/.+\)?\ | default/.+\ | group-?\ | hosts\..+\ | inittab\ | ksysguarddrc\ | opera6rc\ | passwd-?\ | shadow-?\ | sysconfig/.+\)\' . conf-mode) | ([cC]hange[lL]og[-.][-0-9a-z]+\' . change-log-mode) | (/\.?\(?:gnokiirc\ | kde.*rc\ | mime\.types\ | wgetrc\)\' . conf-mode) | (/\.\(?:enigma\ | gltron\ | gtk\ | hxplayer\ | net\ | neverball\ | qt/.+\ | realplayer\ | scummvm\ | sversion\ | sylpheed/.+\ | xmp\)rc\' . conf-mode) | (/\.\(?:gdbtkinit\ | grip\ | orbital/.+txt\ | rhosts\ | tuxracer/options\)\' . conf-mode) | (/\.?X\(?:default\ | resource\ | re\)s\> . conf-xdefaults-mode) | (/X11.+app-defaults/ . conf-xdefaults-mode) | (/X11.+locale/.+/Compose\' . conf-colon-mode) | (/X11.+locale/compose\.dir\' . conf-javaprop-mode) | (\.~?[0-9]+\.[0-9][-.0-9]*~?\' nil t) | (\.\(?:orig\ | in\ | [bB][aA][kK]\)\' nil t) | ([/.]c\(?:on\)?f\(?:i?g\)?\(?:\.[a-zA-Z0-9._-]+\)?\' . conf-mode-maybe) | (\.[1-9]\' . nroff-mode) | (\.tgz\' . tar-mode) | (\.tbz2?\' . tar-mode) |
+
+** Erlang mode
 #+begin_src emacs-lisp
 ; erlang-mode
 (setq load-path (cons  "/usr/local/Cellar/erlang/R1/lib/erlang/lib/tools/emacs"
@@ -199,7 +211,7 @@ far:
    (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
    ;; MS Windows clipboard is UTF-16LE
 (set-clipboard-coding-system 'utf-16le-dos)
-** Ruby conf
+** Ruby mode
 #+begin_src emacs-lisp
 (setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ;
 (require 'ruby-mode)
@@ -210,14 +222,20 @@ far:
 ;; positive.  Tool bar has icons document (read file), folder (read
 ;; directory), X (discard buffer), disk (save), disk+pen (save-as),
 ;; back arrow (undo), scissors (cut), etc.
-(setq-default tool-bar-mode 0)
+(tool-bar-mode 0)
 
 ;; git delete trailing whitespace
- (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+(add-hook 'icicle-mode-hook 'my-icicle-mode-hook)
+(define-key icicle-mode-map (kbd "C-c f") 'icicle-locate-file)
+
+(symbol-value icicle-mode)
+
 #+end_src
 
 #+RESULTS:
-| delete-trailing-whitespace |
+| my-icicle-mode-hook |
 
 ** Org/GTD config
 #+being_src emacs-lisp
