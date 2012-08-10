@@ -43,8 +43,9 @@ far:
 (require 'fuzzy-match)
 (require 'synonyms)
 (require 'icicles)
-(require 'color-theme)
-(require 'zenburn)
+;(require 'color-theme-solarized)
+;(require 'solarized)
+
 (require 'epa-file)
 (require 'col-highlight)
 (require 'myemacs)
@@ -60,14 +61,23 @@ far:
 #+end_src
 
 * others things
+** Emacs theme
+#+begin_src emacs-lisp
+(add-to-list 'custom-theme-load-path "~/.libemacs/lib/themes/emacs-color-theme-solarized")
+(load-theme 'solarized-dark t)
+#+end_src
+
+#+RESULTS:
+: t
+
 ** not commented
 #+begin_src emacs-lisp
-(eval-after-load "color-theme"
-  '(progn
-     (color-theme-initialize)
-     (color-theme-zenburn)))
+; (eval-after-load "color-theme"
+;  '(progn
+;     (color-theme-initialize)
+;     (color-theme-zenburn)))
 
-(set-face-background 'col-highlight zenburn-bg-1)
+;(set-face-background 'col-highlight zenburn-bg-1)
 (set-face-attribute 'mode-line nil :box nil)
 (fset 'yes-or-no-p 'y-or-n-p)
 (show-paren-mode t)
@@ -215,6 +225,7 @@ far:
 #+begin_src emacs-lisp
 (setq enh-ruby-program "~/.rvm/rubies/ruby-1.9.3-p125/bin/ruby") ;
 (require 'ruby-mode)
+(add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode))
 #+end_src
 ** personal conf
 #+begin_src emacs-lisp
