@@ -4,6 +4,7 @@ ln_bin=/bin/ln
 env_bin=/usr/bin/env
 git_bin=${GIT_BIN:-$(which git)}
 
+
 print_info()
 {
   printf "%s\n" "$1"
