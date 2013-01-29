@@ -227,6 +227,14 @@ far:
 (require 'ruby-mode)
 (add-to-list 'auto-mode-alist '("\\.pp$" . ruby-mode))
 #+end_src
+** Emacs server
+#+begin_src emacs-lisp
+(if (file-exists-p
+ (concat (getenv "TMPDIR") "emacs"
+         (number-to-string
+          (user-real-uid)) "/server"))
+nil (server-start))
+#+end_src
 ** personal conf
 #+begin_src emacs-lisp
 ;; With numeric ARG, display the tool bar if and only if ARG is
