@@ -41,7 +41,7 @@ dot_clone_dot()
   then
     (cd "$HOME/.dot" && $git_bin pull)
   else
-    $git_bin clone git://github.com/lorn/dot.git "$HOME/.dot"
+    $git_bin clone --recursive git://github.com/lorn/dot.git "$HOME/.dot"
   fi
 }
 
