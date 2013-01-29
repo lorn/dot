@@ -4,3 +4,6 @@
 [submodule "haskell-mode"]
 	path = haskell-mode
 	url = git://github.com/haskell/haskell-mode.git
+[submodule "enhanced-ruby-mode"]
+	path = enhanced-ruby-mode
+	url = git://github.com/zenspider/enhanced-ruby-mode.git
