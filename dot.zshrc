@@ -3,7 +3,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 # Set to the name theme to load.
 # Look in ~/.oh-my-zsh/themes/
-export ZSH_THEME="agnoster"
+export ZSH_THEME="robbyrussell"
 
 # Set to this to use case-sensitive completion
 # export CASE_SENSITIVE="true"
@@ -27,4 +27,3 @@ source $ZSH/oh-my-zsh.sh
 export PATH=/Users/lorn/App/bin:/Users/lorn/App/node/bin:$PATH
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" ]]
 source /Users/lorn/perl5/perlbrew/etc/bashrc)
-
