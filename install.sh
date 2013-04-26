@@ -82,6 +82,9 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dot/dot.vim" "$HOME/.vim"
   $ln_bin -s -f -n "$HOME/.dot/dot.vim/vimrc" "$HOME/.vimrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.rspec.opts" "$HOME/.rspec.opts"
+  $ln_bin -s -f -n "$HOME/.dot/dot.vim/vimrc" "$HOME/.vimrc"
+  $ln_bin -s -f -n "$HOME/.dot/dot.ghc/" "$HOME/.ghc"
+
 }
 
 dot_install_zsh()
