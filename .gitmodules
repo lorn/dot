@@ -7,3 +7,6 @@
 [submodule "enhanced-ruby-mode"]
 	path = enhanced-ruby-mode
 	url = git://github.com/zenspider/enhanced-ruby-mode.git
+[submodule "helm"]
+	path = helm
+	url = https://github.com/emacs-helm/helm.git
