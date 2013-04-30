@@ -79,10 +79,7 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dot/dot.muttrc" "$HOME/.muttrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.mutt" "$HOME/.mutt"
   $ln_bin -s -f -n "$HOME/.dot/dot.esig" "$HOME/.esig"
-  $ln_bin -s -f -n "$HOME/.dot/dot.vim" "$HOME/.vim"
-  $ln_bin -s -f -n "$HOME/.dot/dot.vim/vimrc" "$HOME/.vimrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.rspec.opts" "$HOME/.rspec.opts"
-  $ln_bin -s -f -n "$HOME/.dot/dot.vim/vimrc" "$HOME/.vimrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.ghc/" "$HOME/.ghc"
 
 }

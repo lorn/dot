@@ -265,7 +265,7 @@ nil (server-start))
 
 (symbol-value icicle-mode)
 
-(add-to-list 'load-path "/Users/lrodrigues/.libemacs/lib/helm")
+(add-to-list 'load-path "~/.libemacs/lib/helm")
 (require 'helm-config)
 (require 'helm-files)
 (setq helm-idle-delay 0.1)
@@ -279,7 +279,7 @@ nil (server-start))
 #+end_src
 
 #+RESULTS:
-: ac-complete-words-in-ruby-buffers
+: helm-for-files
 
 ** Org/GTD config
 #+being_src emacs-lisp
