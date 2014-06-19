@@ -1,6 +1,6 @@
 [user]
-	name = Lindolfo 'Lorn' Rodrigues
-	email = lorn@lornlab.org
+  name = Lindolfo 'Lorn' Rodrigues
+  email = lorn@lornlab.org
 
 [color]
   diff = auto
@@ -21,13 +21,20 @@
   xlog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 
 [apply]
-	whitespace=fix
+  whitespace=fix
 
 [core]
-  editor = /usr/local/bin/vim
-  #excludesfile = ~/.gitignore
+  editor = /usr/bin/vim_
+  excludesfile = ~/.gitignore
   pager = less -FRSX
   whitespace = trailing-space,space-before-tab  # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing
 
 [push]
-	default = matching
+  default = matching
+
+[merge]
+  ff = false
+  default = matching
+
+[hub]
+  protocol = https

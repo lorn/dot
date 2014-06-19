@@ -262,6 +262,10 @@ far:
 ;; back arrow (undo), scissors (cut), etc.
 (tool-bar-mode 0)
 
+(defun reconfigure ()
+  (interactive)
+  (load-file "~/.emacs.d/init.el"))
+
 ;; git delete trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -279,7 +283,6 @@ far:
 (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
       do (add-to-list 'helm-c-boring-file-regexp-list ext))
 (define-key global-map [(alt t)] 'helm-for-files)
-
 
 #+end_src
 

@@ -7,3 +7,4 @@ ac-comphist.dat
 emacs.el
 auto-save-list
 bookmarks
+ghci_history
