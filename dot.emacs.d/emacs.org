@@ -231,6 +231,7 @@ far:
 
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 (add-to-list 'auto-mode-alist '("\\.t$"  . cperl-mode))
+(add-to-list 'auto-mode-alist '("\\.cgi$" . cperl-mode))
 
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.text" . markdown-mode) auto-mode-alist))
