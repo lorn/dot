@@ -110,8 +110,13 @@ far:
 * others things
 ** Emacs theme
 #+begin_src emacs-lisp
+(setq solarized-termcolors 256)
+(setq solarized_visibility  "high")
+(setq solarized_contrast  "high")
+
 (add-to-list 'custom-theme-load-path "~/.libemacs/lib/themes/emacs-color-theme-solarized")
 (load-theme 'solarized-dark t)
+
 #+end_src
 
 #+RESULTS:
