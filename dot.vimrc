@@ -141,6 +141,8 @@ nnoremap <c-l> <c-w>l
 imap <c-l> <space>=><space>
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
+" Clear the search buffer when hitting return
+nnoremap <CR> :nohlsearch<cr>
 nnoremap <leader><leader> <c-^>
 " Close all other windows, open a vertical split, and open this file's test
 " alternate in it.
@@ -309,10 +311,7 @@ nnoremap <leader>. :call OpenTestAlternate()<cr>
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RUNNING TESTS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! MapCR()
-  nnoremap <cr> :call RunTestFile()<cr>
-endfunction
-call MapCR()
+nnoremap <leader>t :call RunTestFile()<cr>
 nnoremap <leader>T :call RunNearestTest()<cr>
 nnoremap <leader>a :call RunTests('')<cr>
 nnoremap <leader>c :w\|:!script/features<cr>
