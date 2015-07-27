@@ -9,6 +9,6 @@ Installing
 
 Assuming you have git installed::
 
-  $ curl -s curl -s https://raw.github.com/lorn/dot/master/install.sh | sh
+  $ curl -s https://raw.githubusercontent.com/lorn/dot/master/install.sh | sh
   # or
-  $ wget --no-check-certificate -O - curl -s https://raw.github.com/lorn/dot/master/install.sh | sh
+  $ wget --no-check-certificate -O https://raw.githubusercontent.com/lorn/dot/master/install.sh | sh
