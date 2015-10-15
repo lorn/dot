@@ -60,25 +60,11 @@ dot_clone_zsh()
 dot_install_dot()
 {
   print_info "INSTALLING DOT FILES"
-  $ln_bin -s -f -n "$HOME/.dot/dot.emacs.d" "$HOME/.emacs.d"
-  $ln_bin -s -f -n "$HOME/.dot/dot.libemacs" "$HOME/.libemacs"
   $ln_bin -s -f -n "$HOME/.dot/dot.viper" "$HOME/.viper"
   $ln_bin -s -f -n "$HOME/.dot/dot.vim" "$HOME/.vim"
   $ln_bin -s -f -n "$HOME/.dot/dot.vimrc" "$HOME/.vimrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.bash_profile" "$HOME/.bash_profile"
-  $ln_bin -s -f -n "$HOME/.dot/dot.bashrc" "$HOME/.bashrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.conkerorrc" "$HOME/.conkerorrc"
   $ln_bin -s -f -n "$HOME/.dot/dot.gitconfig" "$HOME/.gitconfig"
   $ln_bin -s -f -n "$HOME/.dot/dot.inputrc" "$HOME/.inputrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.screenrc" "$HOME/.screenrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.xinitrc" "$HOME/.xinitrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.xmobarrc" "$HOME/.xmobarrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.xmodmaprc" "$HOME/.xmodmaprc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.xmonad" "$HOME/.xmonad"
-  $ln_bin -s -f -n "$HOME/.dot/dot.xresourcesrc" "$HOME/.xresourcesrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.muttrc" "$HOME/.muttrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.mutt" "$HOME/.mutt"
-  $ln_bin -s -f -n "$HOME/.dot/dot.esig" "$HOME/.esig"
   $ln_bin -s -f -n "$HOME/.dot/dot.rspec.opts" "$HOME/.rspec.opts"
   $ln_bin -s -f -n "$HOME/.dot/dot.ghc/" "$HOME/.ghc"
 
@@ -87,7 +73,7 @@ dot_install_dot()
 dot_install_zsh()
 {
   print_info "INSTALLING ZSH FILES"
-  $ln_bin -s -f -n "$HOME/.oh-my-zsh/templates/zshrc.zsh-template" "$HOME/.zshrc"
+  $ln_bin -s -f -n "$HOME/.dot/dot.zshrc" "$HOME/.zshrc"
 }
 
 check_binaries

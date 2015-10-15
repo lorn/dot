@@ -24,7 +24,7 @@
   whitespace=fix
 
 [core]
-  editor = vim
+  editor = emacsclient -t -a=\\\"\\\"
   excludesfile = ~/.gitignore
   pager = less -FRSX
   whitespace = trailing-space,space-before-tab  # http://stackoverflow.com/questions/591923/make-git-automatically-remove-trailing-whitespace-before-committing
@@ -32,9 +32,6 @@
 [push]
   default = matching
 
-[merge]
-  ff = false
-  default = matching
 
 [hub]
   protocol = https
