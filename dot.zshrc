@@ -19,11 +19,8 @@ export ZSH_THEME="dsouza"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby ssh-agent brew docker emacs fasd gem postgres tmux)
+plugins=(git ruby ssh-agent brew docker emacs fasd gem postgres)
 
 source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
-export PATH=/Users/lorn/App/bin:/Users/lorn/App/node/bin:$PATH
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" ]]
-source /Users/lorn/perl5/perlbrew/etc/bashrc)
