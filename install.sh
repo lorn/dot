@@ -60,15 +60,9 @@ dot_clone_zsh()
 dot_install_dot()
 {
   print_info "INSTALLING DOT FILES"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.viper" "$HOME/.viper"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.vim" "$HOME/.vim"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.vimrc" "$HOME/.vimrc"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.gitconfig" "$HOME/.gitconfig"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.inputrc" "$HOME/.inputrc"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.rspec.opts" "$HOME/.rspec.opts"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.ghc/" "$HOME/.ghc"
   $ln_bin -s -f -n "$HOME/.dotfiles/Brewfile" "$HOME/.Brewfile"
-
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.spacemacs" "$HOME/.spacemacs"
 
 }
 
