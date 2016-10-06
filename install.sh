@@ -36,12 +36,12 @@ check_binaries()
 
 dot_clone_dot()
 {
-  print_info "CLONING DOT INTO $HOME/.dot"
-  if [ -d "$HOME/.dot" ]
+  print_info "CLONING DOT INTO $HOME/.dotfiles"
+  if [ -d "$HOME/.dotfiles" ]
   then
-    (cd "$HOME/.dot" && $git_bin pull)
+    (cd "$HOME/.dotfilesfiles" && $git_bin pull)
   else
-    $git_bin clone --recursive git://github.com/lorn/dot.git "$HOME/.dot"
+    $git_bin clone --recursive git://github.com/lorn/dot.git "$HOME/.dotfilesfiles"
   fi
 }
 
@@ -60,20 +60,20 @@ dot_clone_zsh()
 dot_install_dot()
 {
   print_info "INSTALLING DOT FILES"
-  $ln_bin -s -f -n "$HOME/.dot/dot.viper" "$HOME/.viper"
-  $ln_bin -s -f -n "$HOME/.dot/dot.vim" "$HOME/.vim"
-  $ln_bin -s -f -n "$HOME/.dot/dot.vimrc" "$HOME/.vimrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.gitconfig" "$HOME/.gitconfig"
-  $ln_bin -s -f -n "$HOME/.dot/dot.inputrc" "$HOME/.inputrc"
-  $ln_bin -s -f -n "$HOME/.dot/dot.rspec.opts" "$HOME/.rspec.opts"
-  $ln_bin -s -f -n "$HOME/.dot/dot.ghc/" "$HOME/.ghc"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.viper" "$HOME/.viper"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.vim" "$HOME/.vim"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.vimrc" "$HOME/.vimrc"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.gitconfig" "$HOME/.gitconfig"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.inputrc" "$HOME/.inputrc"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.rspec.opts" "$HOME/.rspec.opts"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.ghc/" "$HOME/.ghc"
 
 }
 
 dot_install_zsh()
 {
   print_info "INSTALLING ZSH FILES"
-  $ln_bin -s -f -n "$HOME/.dot/dot.zshrc" "$HOME/.zshrc"
+  $ln_bin -s -f -n "$HOME/.dotfilesfiles/dot.zshrc" "$HOME/.zshrc"
 }
 
 check_binaries
