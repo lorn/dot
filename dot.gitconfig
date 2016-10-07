@@ -31,3 +31,5 @@
 
 [hub]
   protocol = https
+[help]
+	autocorrect = 30
