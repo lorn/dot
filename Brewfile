@@ -45,6 +45,7 @@ cask 'franz'
 cask 'adium'
 cask 'dropbox'
 cask 'spotify'
+cask 'sonos' 
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
