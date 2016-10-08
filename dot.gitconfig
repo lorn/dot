@@ -33,3 +33,9 @@
   protocol = https
 [help]
 	autocorrect = 30
+[github]
+	user = lorn
+[push]
+	default = simple
+[credential]
+	helper = osxkeychain
