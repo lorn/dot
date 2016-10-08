@@ -29,6 +29,7 @@ brew 'rbenv'
 brew 'ruby-build'
 brew 'tmux'
 brew 'unrar'
+brew 'postgresql'
 brew 'watch'
 brew 'wget'
 brew 'wxmac'
@@ -38,6 +39,10 @@ brew 'zsh'
 cask 'skype'
 cask 'firefox'
 cask 'iterm2'
+cask 'docker'
+cask 'franz'
+cask 'adium'
+cask 'dropbox'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
