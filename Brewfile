@@ -40,7 +40,7 @@ tap homebrew/versions
 tap argon/mas
 
 tap d12frosted/emacs-plus
-brew emacs-plus '----with-cocoa ----with-ctags ----with-glib ----with-gnutls ----with-imagemagick ----with-librsvg'
+brew emacs-plus '--with-cocoa --with-ctags --with-glib --with-gnutls --with-imagemagick --with-librsvg'
 
 # Other commands
 cask_args appdir: '/Applications'
