@@ -2,10 +2,9 @@
 # tap repositories and their packages
 
 tap caskroom/cask
-cask adium
 cask firefox
 cask iterm2
-cask skype
+cask spotify
 
 tap homebrew/bundle
 
@@ -50,4 +49,3 @@ mas 'Evernote', id: 406056744
 mas 'LastPass', id: 926036361
 mas 'Slack', id: 803453959
 mas 'Telegram', id: 747648890
-mas 'Textual', id:403012667
