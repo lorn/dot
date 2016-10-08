@@ -38,6 +38,7 @@ brew 'zsh'
 
 cask 'skype'
 cask 'firefox'
+cask 'google-chrome'
 cask 'iterm2'
 cask 'docker'
 cask 'franz'
