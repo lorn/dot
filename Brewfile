@@ -43,6 +43,7 @@ cask 'docker'
 cask 'franz'
 cask 'adium'
 cask 'dropbox'
+cask 'spotify'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
