@@ -48,6 +48,7 @@ cask 'spotify'
 cask 'sonos' 
 cask 'ngrok' 
 cask 'rescuetime'
+cask 'ynab'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
