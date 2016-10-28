@@ -20,6 +20,7 @@ brew 'elixir'
 brew 'emacs-plus', args: ["--with-cocoa","--with-ctags","--with-glib", "--with-gnutls", "--with-imagemagick", "--with-librsvg"]      
 brew 'erlang'
 brew 'git'
+brew 'heroku'
 brew 'leiningen'
 brew 'libcroco'
 brew 'mtr'
