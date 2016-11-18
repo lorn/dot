@@ -50,6 +50,10 @@ cask 'sonos'
 cask 'ngrok' 
 cask 'rescuetime'
 cask 'ynab'
+cask 'vagrant'
+cask 'virtualbox'
+cask 'heroku'
+cask 'java'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
