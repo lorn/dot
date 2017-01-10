@@ -54,6 +54,9 @@ cask 'vagrant'
 cask 'virtualbox'
 cask 'heroku'
 cask 'java'
+cask 'flux'
+cask 'vlc'
+cask 'toggldesktop'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
