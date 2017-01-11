@@ -20,6 +20,7 @@ brew 'elixir'
 brew 'emacs-plus', args: ["--with-cocoa","--with-ctags","--with-glib", "--with-gnutls", "--with-imagemagick", "--with-librsvg"]      
 brew 'erlang'
 brew 'git'
+brew 'heroku'
 brew 'leiningen'
 brew 'libcroco'
 brew 'mtr'
@@ -49,6 +50,13 @@ cask 'sonos'
 cask 'ngrok' 
 cask 'rescuetime'
 cask 'ynab'
+cask 'vagrant'
+cask 'virtualbox'
+cask 'heroku'
+cask 'java'
+cask 'flux'
+cask 'vlc'
+cask 'toggldesktop'
 
 mas '1Password', id: 443987910 
 mas 'Evernote', id: 406056744
