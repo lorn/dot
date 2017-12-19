@@ -63,6 +63,7 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.gitconfig" "$HOME/.gitconfig"
   $ln_bin -s -f -n "$HOME/.dotfiles/Brewfile" "$HOME/.Brewfile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.spacemacs" "$HOME/.spacemacs"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.ssh_config" "$HOME/.ssh/config"
 
 }
 

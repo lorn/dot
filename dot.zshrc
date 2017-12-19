@@ -19,8 +19,12 @@ export ZSH_THEME="dsouza"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby brew docker emacs fasd gem postgres rbenv lunchy colored-man-pages)
+plugins=(git ruby brew docker emacs fasd gem postgres rbenv lunchy colored-man-pages zsh-wakatime)
 
 source $ZSH/oh-my-zsh.sh
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
 
 # Customize to your needs...
