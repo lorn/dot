@@ -36,7 +36,6 @@ values."
      emacs-lisp
      git
      ;; markdown
-     org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
@@ -48,9 +47,10 @@ values."
      python
      ruby
      erlang
-     go 
+     go
      sml
      wakatime
+     gnus
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -266,29 +266,66 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (with-eval-after-load 'org
-    (setq org-directory "~/Documents/src/org/")
-    (setq org-default-notes-file (concat org-directory "inbox.org"))
-    (define-key global-map "\C-cc" 'org-capture)
-
-    ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
-    (setq org-capture-templates
-          (quote (("n" "note" entry (file "inbox.org")
-                   "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t)
-                  ("j" "Journal" entry (file+datetree "inbox.org")
-                   "* %?\n%U\n" :clock-in t :clock-resume t)
-                  ("m" "Meeting" entry (file "inbox.org")
-                   "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-                  ("p" "Phone call" entry (file "inbox.org")
-                   "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-                  ("h" "Habit" entry (file "inbox.org")
-                   "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
-    )
-
   (global-wakatime-mode)
   (setq wakatime-cli-path "/usr/local/bin/wakatime")
   (setq wakatime-python-bin "/usr/local/bin/python2.7")
+  (setq racer-rust-src-path "/home/lorn/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src")
   (setq vc-follow-symlinks nil)
+  (setq cider-lein-parameters "repl :headless :host localhost")
+
+  ;; Get email, and store in nnml
+  (setq gnus-secondary-select-methods
+        '(
+          (nnimap "fastmail"
+                  (nnimap-address
+                   "imap.fastmail.com")
+                  (nnimap-server-port 993)
+                  (nnimap-stream ssl))
+          ))
+
+  ;; Send email via fastmail:
+  (setq send-mail-function    'smtpmail-send-it
+        smtpmail-smtp-server  "smtp.fastmail.com"
+        smtpmail-stream-type  'tls
+        smtpmail-smtp-service 465
+        smtpmail-debug-info t
+        smtpmail-debug-verb t)
+
+  ;; Archive outgoing email in Sent folder on imap.gmail.com:
+  (setq gnus-message-archive-method '(nnimap "imap.fastmail.com")
+        gnus-message-archive-group "Sent")
+
+  ;; set return email address based on incoming email address
+  (setq gnus-posting-styles
+        '(((header "to" "address@outlook.com")
+           (address "address@outlook.com"))
+          ((header "to" "address@gmail.com")
+           (address "address@gmail.com"))))
+
+  ;; store email in ~/gmail directory
+  (setq nnml-directory "~/fastmail")
+  (setq message-directory "~/fastmail")
+
+  ;; @see http://www.gnu.org/software/emacs/manual/html_node/gnus/Expiring-Mail.html
+  ;; press 'E' to expire email
+  (setq nnmail-expiry-target "INBOX.Trash")
+  (setq nnmail-expiry-wait 'immediate)
+  (setq user-mail-address "lorn@lornlab.org")
+  (setq user-full-name "Lindolfo Rodrigues")
+
+  (setq gnus-article-browse-delete-temp t)
+  (setq gnus-fetch-old-headers t)
+  (setq message-sendmail-envelope-from 'header)
+  (setq fill-flowed-display-column nil)
+
+  (defun codefalling/gnus-show-all ()
+  "Show all mail"
+  (interactive)
+  (gnus-summary-insert-old-articles t) ;; show all, or t->50 to show 50 old mail
+  (goto-char (point-min)))
+
+  (add-hook 'gnus-summary-mode-hook '(lambda () (run-with-idle-timer 0.1 nil 'codefalling/gnus-show-all)))
+
 
   )
 
@@ -301,7 +338,7 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (winum window-number pos-tip org-category-capture ghub let-alist csv-mode toml-mode racer cargo rust-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data fuzzy flycheck-credo wakatime-mode go-guru nginx-mode phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode mmm-mode markdown-toc markdown-mode gh-md yaml-mode ob-elixir minitest hide-comnt yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file ob-sml sml-mode neotree move-text magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flycheck-mix flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree erlang elisp-slime-nav dumb-jump diminish diff-hl define-word cython-mode company-statistics company-go go-mode company-anaconda column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue clojure-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f s alchemist company dash elixir-mode pkg-info epl aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
+    (sesman winum window-number pos-tip org-category-capture ghub let-alist csv-mode toml-mode racer cargo rust-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data fuzzy flycheck-credo wakatime-mode go-guru nginx-mode phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor js2-mode js-doc company-tern dash-functional tern coffee-mode mmm-mode markdown-toc markdown-mode gh-md yaml-mode ob-elixir minitest hide-comnt yapfify ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle rvm ruby-tools ruby-test-mode rubocop rspec-mode robe restart-emacs rbenv rake rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org org-pomodoro alert log4e gntp org-plus-contrib org-download org-bullets open-junk-file ob-sml sml-mode neotree move-text magit-gitflow macrostep lorem-ipsum live-py-mode linum-relative link-hint info+ indent-guide ido-vertical-mode hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make projectile helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio go-eldoc gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flycheck-mix flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree erlang elisp-slime-nav dumb-jump diminish diff-hl define-word cython-mode company-statistics company-go go-mode company-anaconda column-enforce-mode clojure-snippets clj-refactor hydra inflections edn multiple-cursors paredit peg clean-aindent-mode cider-eval-sexp-fu eval-sexp-fu highlight cider seq spinner queue clojure-mode chruby bundler inf-ruby bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed anaconda-mode pythonic f s alchemist company dash elixir-mode pkg-info epl aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line helm avy helm-core async ac-ispell auto-complete popup quelpa package-build spacemacs-theme)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

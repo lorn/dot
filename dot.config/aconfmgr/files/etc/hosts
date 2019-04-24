@@ -1,0 +1,18 @@
+#
+# /etc/hosts: static lookup table for host names
+#
+
+#<ip-address>	<hostname.domain.org>	<hostname>
+127.0.0.1	localhost.localdomain	localhost
+::1		localhost.localdomain	localhost
+#187.45.236.40 code.locaweb.com.br
+127.0.0.1 postgres redis
+10.90.31.131 exhibitor-1.locaweb.com.br
+10.90.31.132 exhibitor-2.locaweb.com.br
+#10.90.31.132 arda.locaweb.com.br
+207.174.214.139 www.ronaldo.academy
+10.30.94.15 feed-processor.locaweb.com.br feedprocessor.locaweb.com.br
+10.32.6.66 cegonha.devint.locaweb.com.br
+#35.157.136.212 zalebs.com wagtail.zalebs.com
+#
+# End of file
