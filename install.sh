@@ -63,35 +63,23 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.gitconfig" "$HOME/.gitconfig"
   $ln_bin -s -f -n "$HOME/.dotfiles/Brewfile" "$HOME/.Brewfile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.spacemacs" "$HOME/.spacemacs"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.ssh_config" "$HOME/.ssh/config"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.config" "$HOME/.config"
-
-}
-
-dot_install_zsh()
-{
-  print_info "INSTALLING ZSH FILES"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.zshrc" "$HOME/.zshrc"
-}
-
-dot_install_xinitrc()
-{
-    print_info "INSTALLING XINITRC FILES"
-    $ln_bin -s -f -n "$HOME/.dotfiles/dot.xinitrc" "$HOME/.xinitrc"
-}
-
-dot_install_profile()
-{
-  print_info "INSTALLING PROFILE FILES"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.xinitrc" "$HOME/.xinitrc"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.profile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.xprofile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.zprofile"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.zshrc" "$HOME/.zshrc"
 }
 
 
+dot_clone_spacemacs()
+{
+    print_info "INSTALLING SPACEMACS"
+    $git_bin clone https://github.com/syl20bnr/spacemacs "$HOME/.emacs.d"
+}
 
 check_binaries
 dot_clone_dot
 dot_install_dot
 dot_clone_zsh
-dot_install_zsh
+dot_clone_spacemacs
