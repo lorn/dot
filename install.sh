@@ -41,7 +41,7 @@ dot_clone_dot()
   then
     (cd "$HOME/.dotfiles" && $git_bin pull)
   else
-    $git_bin clone --recursive git://github.com/lorn/dot.git "$HOME/.dotfiles"
+    $git_bin clone --recursive git://github.com/lorn/dotfiles.git "$HOME/.dotfiles"
   fi
 }
 
@@ -64,10 +64,11 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dotfiles/Brewfile" "$HOME/.Brewfile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.spacemacs" "$HOME/.spacemacs"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.config" "$HOME/.config"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.scripts" "$HOME/.scripts"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.xinitrc" "$HOME/.xinitrc"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.profile"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.xprofile"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profiles" "$HOME/.zprofile"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profile" "$HOME/.profile"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profile" "$HOME/.xprofile"
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.profile" "$HOME/.zprofile"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.zshrc" "$HOME/.zshrc"
 }
 

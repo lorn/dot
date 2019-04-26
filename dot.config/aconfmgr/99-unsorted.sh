@@ -47,7 +47,6 @@ AddPackage gettext # GNU internationalization library
 AddPackage git # the fast distributed version control system
 AddPackage glibc # GNU C Library
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
-AddPackage go # Core compiler tools for the Go programming language
 AddPackage grep # A string search utility
 AddPackage groff # GNU troff text-formatting system
 AddPackage grub # GNU GRand Unified Bootloader (2)
@@ -74,6 +73,7 @@ AddPackage logrotate # Rotates system logs automatically
 AddPackage lvm2 # Logical Volume Manager 2 utilities
 AddPackage m4 # The GNU macro processor
 AddPackage make # GNU make utility to maintain groups of programs
+AddPackage maim
 AddPackage man-db # A utility for reading man pages
 AddPackage man-pages # Linux man pages
 AddPackage mdadm # A tool for managing/monitoring Linux md device arrays, also known as Software RAID
@@ -85,7 +85,6 @@ AddPackage nano # Pico editor clone with enhancements
 AddPackage netctl # Profile based systemd network management
 AddPackage network-manager-applet # Applet for managing network connections
 AddPackage networkmanager # Network connection manager and user applications
-AddPackage nodejs # Evented I/O for V8 javascript
 AddPackage ntp # Network Time Protocol reference implementation
 AddPackage openssh # Premier connectivity tool for remote login with the SSH protocol
 AddPackage orage # A simple calendar application with reminders for Xfce
@@ -111,15 +110,10 @@ AddPackage python2-cheetah # A Python-powered template engine and code generator
 AddPackage python2-lxml # Python2 binding for the libxml2 and libxslt libraries
 AddPackage python2-pyzmq # Python2 bindings for zeromq, written in Cython
 AddPackage python2-sip # Python 2.x SIP bindings for C and C++ libraries
-AddPackage qwt5 # Qt Widgets for Technical Applications (version 5.X)
 AddPackage ranger # Simple, vim-like file manager
-AddPackage redis # Advanced key-value store
-AddPackage reiserfsprogs # Reiserfs utilities
 AddPackage ripgrep # A search tool that combines the usability of ag with the raw speed of grep
 AddPackage ristretto # Fast and lightweight picture-viewer for Xfce4
 AddPackage rsync # A file transfer program to keep remote files in sync
-AddPackage ruby # An object-oriented language for quick and easy programming
-AddPackage s-nail # Environment for sending and receiving mail
 AddPackage sed # GNU stream editor
 AddPackage shadow # Password and account management tool suite with support for shadow files and PAM
 AddPackage sudo # Give certain users the ability to run some commands as root
@@ -140,10 +134,7 @@ AddPackage unrar # The RAR uncompression program
 AddPackage unzip # For extracting and viewing files in .zip archives
 AddPackage usbutils # USB Device Utilities
 AddPackage util-linux # Miscellaneous system utilities for Linux
-AddPackage vagrant # Build and distribute virtualized development environments
-AddPackage vi # The original ex/vi text editor
 AddPackage vim # Vi Improved, a highly configurable, improved version of the vi text editor
-AddPackage virtualbox # Powerful x86 virtualization for enterprise as well as home use
 AddPackage vlc # Multi-platform MPEG, VCD/DVD, and DivX player
 AddPackage wget # Network utility to retrieve files from the Web
 AddPackage which # A utility to show the full path of commands
@@ -156,8 +147,6 @@ AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video driver
 AddPackage xfburn # A simple CD/DVD burning tool based on libburnia libraries
 AddPackage xfconf # A simple client-server configuration storage and query system
 AddPackage xfsprogs # XFS filesystem utilities
-AddPackage xfwm4 # Xfce window manager
-AddPackage xfwm4-themes # A set of additional themes for the Xfce window manager
 AddPackage xorg-bdftopcf # Convert X font from Bitmap Distribution Format to Portable Compiled Format
 AddPackage xorg-iceauth # ICE authority file utility
 AddPackage xorg-luit # Filter that can be run between an arbitrary application and a UTF-8 terminal emulator
@@ -166,7 +155,6 @@ AddPackage xorg-server # Xorg X server
 AddPackage xorg-sessreg # Register X sessions in system utmp/utmpx databases
 AddPackage xorg-setxkbmap # Set the keyboard using the X Keyboard Extension
 AddPackage xorg-smproxy # Allows X applications that do not support X11R6 session management to participate in an X11R6 session
-AddPackage xorg-x11perf # Simple X server performance benchmarker
 AddPackage xorg-xauth # X.Org authorization settings program
 AddPackage xorg-xbacklight # RandR-based backlight control application
 AddPackage xorg-xcmsdb # Device Color Characterization utility for X Color Management System
@@ -198,9 +186,7 @@ AddPackage xorg-xwininfo # Command-line utility to print information about windo
 AddPackage xorg-xwud # X Window System image undumping utility
 AddPackage xscreensaver # Screen saver and locker for the X Window System
 AddPackage xsel # XSel is a command-line program for getting and setting the contents of the X selection
-AddPackage xterm # X Terminal Emulator
 AddPackage xwallpaper # Wallpaper setting utility for X
-AddPackage yubikey-manager # Python library and command line tool for configuring a YubiKey
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 AddPackage zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
@@ -211,23 +197,19 @@ AddPackage zsh-syntax-highlighting # Fish shell like syntax highlighting for Zsh
 
 AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
 AddPackage --foreign aura-bin # A secure package manager for Arch Linux and the AUR written in Haskell - Prebuilt binary
+AddPackage --foreign aic94xx-firmware # Adaptec SAS 44300, 48300, 58300 Sequencer Firmware for AIC94xx driver
 AddPackage --foreign chromium-widevine # A browser plugin designed for the viewing of premium video content
 AddPackage --foreign docker-compose-bin # Pythonless package of a a tool for defining and running multi-container applications
 AddPackage --foreign forticlientsslvpn # Fortinet's SSLVPN Client for linux
 AddPackage --foreign ghost-desktop # Ghost Desktop is a beautiful desktop application that allows you to easily manage multiple Ghost blogs and work without distractions.
-AddPackage --foreign htop-vim-git # Interactive text-mode process viewer. Patched for vim keybindings
 AddPackage --foreign jdk # Oracle Java Development Kit
 AddPackage --foreign kubectl-bin # Kubernetes.io client binary
-AddPackage --foreign minikube-bin # A tool that makes it easy to run Kubernetes locally
 AddPackage --foreign monaco-powerline-font-git # Monaco Powerline fonts for X11 and the console
-AddPackage --foreign nodejs-heroku-cli # The next generation Node-based Heroku CLI
-AddPackage --foreign nordnm # A CLI tool for automating the importing, securing and usage of NordVPN OpenVPN servers through NetworkManager.
-AddPackage --foreign nordvpn-bin # NordVPN CLI tool for Linux
 AddPackage --foreign package-query # Query ALPM and AUR
-AddPackage --foreign pcmciautils # Utilities for inserting and removing PCMCIA cards
 AddPackage --foreign polysh # a tool to aggregate several remote shells into one.
-AddPackage --foreign rescuetime # Application time-tracking for Linux. Stable version
 AddPackage --foreign sardi-icons # Sardi is an icon collection for any linux distro with 6 different circular icons and 10 different kind of folders.
+AddPackage --foreign rescuetime2
+AddPackage --foreign heroku-cli
 AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
 AddPackage --foreign st-luke-git # Simple virtual terminal emulator for X
 AddPackage --foreign tcptraceroute # A traceroute implementation using TCP packets.
@@ -235,9 +217,7 @@ AddPackage --foreign ttf-emojione # Official colorful EmojiOne font
 AddPackage --foreign ttf-monaco # A monospaced sans-serif typeface by Apple Inc.
 AddPackage --foreign ttf-symbola # Font for unicode symbols (part of Unicode Fonts for Ancient Scripts).
 AddPackage --foreign wpa_actiond # Daemon that connects to wpa_supplicant and handles connect and disconnect events
-
-AddPackage --foreign xflux-gui-git # Better lighting for Linux. Open source GUI for xflux
-AddPackage --foreign xfwm-axiom-theme # Inspired by the metacity theme "fresh". Two xfwm themes are included, axiom for bright themes and axiomd for dark themes.
+AddPackage --foreign wd719x-firmware # Driver for Western Digital WD7193, WD7197 and WD7296 SCSI cards
 AddPackage --foreign zoom # Zoom, #1 Video Conferencing and Web Conferencing Service 
 
 
@@ -278,24 +258,14 @@ CopyFile /etc/NetworkManager/system-connections/pwned 600
 CopyFile /etc/NetworkManager/system-connections/valinor 600
 CopyFile /etc/NetworkManager/system-connections/valinor\ 5GHz 600
 
-CopyFile /etc/docker/daemon.json
-CopyFile /etc/docker/key.json 600
 CopyFile /etc/hosts
-CopyFile /etc/modprobe.d/disable_overlay_redirect_dir.conf
-CreateLink /etc/os-release ../usr/lib/os-release
-CopyFile /etc/sysctl.d/99-sysctl.conf
-CopyFile /etc/systemd/network/enp0s31f6.network
-CopyFile /etc/systemd/network/wlp1s0.network
 CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service /usr/lib/systemd/system/NetworkManager-dispatcher.service
 CreateLink /etc/systemd/system/default.target /usr/lib/systemd/system/multi-user.target
-CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/lightdm.service
 CreateDir /etc/systemd/system/docker.service.d
-CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
 CreateLink /etc/systemd/system/multi-user.target.wants/NetworkManager.service /usr/lib/systemd/system/NetworkManager.service
 CreateLink /etc/systemd/system/multi-user.target.wants/dhcpcd.service /usr/lib/systemd/system/dhcpcd.service
 CreateLink /etc/systemd/system/multi-user.target.wants/docker.service /usr/lib/systemd/system/docker.service
-CreateLink /etc/systemd/system/multi-user.target.wants/redis.service /usr/lib/systemd/system/redis.service
 CreateLink /etc/systemd/system/multi-user.target.wants/remote-fs.target /usr/lib/systemd/system/remote-fs.target
 CreateLink /etc/systemd/system/multi-user.target.wants/sshd.service /usr/lib/systemd/system/sshd.service
 CreateLink /etc/systemd/user/default.target.wants/xdg-user-dirs-update.service /usr/lib/systemd/user/xdg-user-dirs-update.service
