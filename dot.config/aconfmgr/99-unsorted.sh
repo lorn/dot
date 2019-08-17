@@ -129,6 +129,7 @@ AddPackage tlp # Linux Advanced Power Management
 AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage ttf-dejavu # Font family based on the Bitstream Vera Fonts with a wider range of characters
 AddPackage ttf-font-awesome # Iconic font designed for Bootstrap
+AddPackage ttf-joypixels
 AddPackage tumbler # D-Bus service for applications to request thumbnails
 AddPackage unrar # The RAR uncompression program
 AddPackage unzip # For extracting and viewing files in .zip archives
@@ -139,7 +140,6 @@ AddPackage vlc # Multi-platform MPEG, VCD/DVD, and DivX player
 AddPackage wget # Network utility to retrieve files from the Web
 AddPackage which # A utility to show the full path of commands
 AddPackage wireless_tools # Tools allowing to manipulate the Wireless Extensions
-AddPackage wpa_supplicant # A utility providing key negotiation for WPA wireless networks
 AddPackage xcompmgr # Composite Window-effects manager for X.org
 AddPackage xdg-user-dirs # Manage user directories like ~/Desktop and ~/Music
 AddPackage xf86-input-synaptics # Synaptics driver for notebook touchpads
@@ -224,38 +224,6 @@ AddPackage --foreign zoom # Zoom, #1 Video Conferencing and Web Conferencing Ser
 
 
 CopyFile /etc/NetworkManager/dnsmasq.d/docker-bridge.conf
-CopyFile /etc/NetworkManager/system-connections/Bem\ Feito 600
-CopyFile /etc/NetworkManager/system-connections/Bem\ Vindo\ a\ Livraria\ Cultura 600
-CopyFile /etc/NetworkManager/system-connections/Bem-vindo\ a\ Livraria\ Cultura 600
-CopyFile /etc/NetworkManager/system-connections/Campus\ Community 600
-CopyFile /etc/NetworkManager/system-connections/Campus\ Coworkers 600
-CopyFile /etc/NetworkManager/system-connections/CenturyLink6581 600
-CopyFile /etc/NetworkManager/system-connections/EventosLocaweb 600
-CopyFile /etc/NetworkManager/system-connections/FOSDEM.nmconnection 600
-CopyFile /etc/NetworkManager/system-connections/HeavyMetalPower.nmconnection 600
-CopyFile /etc/NetworkManager/system-connections/Home 600
-CopyFile /etc/NetworkManager/system-connections/IMS-PAULISTA-VISITANTES 600
-CopyFile /etc/NetworkManager/system-connections/Jupiter\ Hotel\ Guest 600
-CopyFile /etc/NetworkManager/system-connections/LW-Internet 600
-CopyFile /etc/NetworkManager/system-connections/LW-Office 600
-CopyFile /etc/NetworkManager/system-connections/Levy_2G 600
-CopyFile /etc/NetworkManager/system-connections/Levy_5G 600
-CopyFile /etc/NetworkManager/system-connections/Locaweb-9ed26342-6a81-48d8-a1ed-792030855d52 600
-CopyFile /etc/NetworkManager/system-connections/Lorn\ Stuff.nmconnection 600
-CopyFile /etc/NetworkManager/system-connections/Mestico\ Cafe 600
-CopyFile /etc/NetworkManager/system-connections/NET_2G9974E9 600
-CopyFile /etc/NetworkManager/system-connections/NET_2GEFDCE9 600
-CopyFile /etc/NetworkManager/system-connections/OReilly18 600
-CopyFile /etc/NetworkManager/system-connections/Rubyconf\ 2018.nmconnection 600
-CopyFile /etc/NetworkManager/system-connections/WIFICAMPUSCODE\ 5GHz 600
-CopyFile /etc/NetworkManager/system-connections/Wiltcher\'s.nmconnection 600
-CopyFile /etc/NetworkManager/system-connections/_HUB 600
-CopyFile /etc/NetworkManager/system-connections/_HUB\ 5\ GHz 600
-CopyFile /etc/NetworkManager/system-connections/iPhone 600
-CopyFile /etc/NetworkManager/system-connections/mirante9dejulho 600
-CopyFile /etc/NetworkManager/system-connections/pwned 600
-CopyFile /etc/NetworkManager/system-connections/valinor 600
-CopyFile /etc/NetworkManager/system-connections/valinor\ 5GHz 600
 
 CopyFile /etc/hosts
 CreateLink /etc/systemd/system/dbus-org.freedesktop.NetworkManager.service /usr/lib/systemd/system/NetworkManager.service

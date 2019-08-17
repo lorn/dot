@@ -48,6 +48,7 @@ IgnorePath '/etc/ssh/*_key.pub' # SSH Host public keys
 IgnorePath '/etc/ssl/certs' # certs Symlinks
 IgnorePath '/etc/texmf'
 IgnorePath '/etc/xml/catalog' # http://xmlsoft.org/catalog.html
+IgnorePath '/etc/NetworkManager/system-connections'
 
 ## /usr/lib
 IgnorePath '/usr/lib/graphviz'
