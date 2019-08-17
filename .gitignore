@@ -8,3 +8,8 @@ emacs.el
 auto-save-list
 bookmarks
 ghci_history
+dot.config/RescueTime.com/
+dot.config/pulse/
+dot.config/shortcutrc
+dot.config/user-dirs.dirs
+dot.config/user-dirs.locale
