@@ -213,7 +213,6 @@ AddPackage --foreign heroku-cli
 AddPackage --foreign skypeforlinux-stable-bin # Skype for Linux - Stable/Release Version
 AddPackage --foreign st-luke-git # Simple virtual terminal emulator for X
 AddPackage --foreign tcptraceroute # A traceroute implementation using TCP packets.
-AddPackage --foreign ttf-emojione # Official colorful EmojiOne font
 AddPackage --foreign ttf-monaco # A monospaced sans-serif typeface by Apple Inc.
 AddPackage --foreign ttf-symbola # Font for unicode symbols (part of Unicode Fonts for Ancient Scripts).
 AddPackage --foreign wpa_actiond # Daemon that connects to wpa_supplicant and handles connect and disconnect events
