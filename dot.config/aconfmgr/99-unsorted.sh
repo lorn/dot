@@ -122,6 +122,7 @@ AddPackage sxiv # Simple X Image Viewer
 AddPackage sysfsutils # System Utilities Based on Sysfs
 AddPackage systemd-sysvcompat # sysvinit compat for systemd
 AddPackage tar # Utility used to store, backup, and transport files
+AddPackage thunar
 AddPackage terminus-font # Monospace bitmap font (for X11 and console)
 AddPackage texinfo # GNU documentation system for on-line information and printed output
 AddPackage tig # Text-mode interface for Git.
@@ -144,6 +145,7 @@ AddPackage xcompmgr # Composite Window-effects manager for X.org
 AddPackage xdg-user-dirs # Manage user directories like ~/Desktop and ~/Music
 AddPackage xf86-input-synaptics # Synaptics driver for notebook touchpads
 AddPackage xf86-video-intel # X.org Intel i810/i830/i915/945G/G965+ video drivers
+AddPackage intel-ucode
 AddPackage xfburn # A simple CD/DVD burning tool based on libburnia libraries
 AddPackage xfconf # A simple client-server configuration storage and query system
 AddPackage xfsprogs # XFS filesystem utilities
@@ -217,8 +219,6 @@ AddPackage --foreign ttf-monaco # A monospaced sans-serif typeface by Apple Inc.
 AddPackage --foreign ttf-symbola # Font for unicode symbols (part of Unicode Fonts for Ancient Scripts).
 AddPackage --foreign wpa_actiond # Daemon that connects to wpa_supplicant and handles connect and disconnect events
 AddPackage --foreign wd719x-firmware # Driver for Western Digital WD7193, WD7197 and WD7296 SCSI cards
-AddPackage --foreign zoom # Zoom, #1 Video Conferencing and Web Conferencing Service 
-
 
 # Wed Apr 24 23:28:52 -03 2019 - New files
 

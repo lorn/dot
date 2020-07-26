@@ -19,7 +19,7 @@ export ZSH_THEME="dsouza"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git ruby brew docker emacs fasd rbenv colored-man-pages asdf)
+plugins=(git ruby docker emacs fasd rbenv colored-man-pages asdf)
 
 source $ZSH/oh-my-zsh.sh
 

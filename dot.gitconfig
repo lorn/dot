@@ -39,3 +39,5 @@
 	default = simple
 [credential]
 	helper = osxkeychain
+[pull]
+	rebase = true
