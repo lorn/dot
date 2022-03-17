@@ -15,7 +15,7 @@ alias grr='git remote rm'
 alias gpu='git pull'
 alias gcl='git clone'
 
-export PATH=/usr/local/bin:/usr/local/sbin:/home/lorn/.asdf/shims:/home/lorn/.asdf/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/home/lorn/.scripts/tools:/home/lorn/.scripts/statusbar:/home/lorn/.scripts/cron:/home/lorn/.scripts/i3cmds:/home/lorn/.scripts/:/home/lorn/.cargo/bin:/home/lorn/.local/bin:/home/lorn/.emacs.d/bin:$PATH
+export PATH=/usr/local/bin:/usr/local/sbin:/Users/lorn/.asdf/shims:/Users/lorn/:/Users/lorn/.emacs.d/bin:$PATH
 
-export GIT_PATH="/home/lorn/src/"
+export GIT_PATH="/Users/lorn/Documents/src/"
 
