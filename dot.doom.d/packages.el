@@ -47,6 +47,6 @@
 ;(package! builtin-package :recipe (:branch "develop"))
 (package! volatile-highlights)
 (package! wakatime-mode)
-;;(package! fasd)
 (package! wc-mode)
 (package! writegood-mode)
+(package! terraform-mode)
