@@ -50,3 +50,5 @@
 (package! wc-mode)
 (package! writegood-mode)
 (package! terraform-mode)
+(package! elixir-mode)
+(package! typescript-mode)
