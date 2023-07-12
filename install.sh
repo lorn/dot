@@ -66,24 +66,10 @@ dot_install_dot()
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.scripts" "$HOME/.scripts"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.zshrc" "$HOME/.zshrc"
   $ln_bin -s -f -n "$HOME/.dotfiles/dot.oh-my-custom.zsh" "$HOME/.oh-my-zsh/custom/custom-lorn.zsh"
-  $ln_bin -s -f -n "$HOME/.dotfiles/dot.doom.d" "$HOME/.doom.d"
-}
-
-
-dot_clone_spacemacs()
-{
-  print_info "CLONING DOOM-EMACS INTO $HOME/.emacs.d"
-  if [ -d "$HOME/.emacs.d" ]
-  then
-    print_info "Already cloned"
-  else
-    $git_bin clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
-    ~/.emacs.d/bin/doom install
-  fi
+  $ln_bin -s -f -n "$HOME/.dotfiles/dot.p10k.zsh" "$HOME/.p10k.zsh"
 }
 
 check_binaries
 dot_clone_dot
 dot_clone_zsh
 dot_install_dot
-dot_clone_spacemacs
