@@ -152,10 +152,7 @@ require("lazy").setup({
     "neovim/nvim-lspconfig", 
     config = function ()
       util = require "lspconfig/util"
-
-      --local capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-      --capabilities.textDocument.completion.completionItem.snippetSupport = true
-
+      require'lspconfig'.tflint.setup{}
    end,
   },
 
@@ -266,6 +263,18 @@ require("lazy").setup({
     end
   },
 
+  {
+    "wakatime/vim-wakatime",
+  },
+
+  {
+   "Vonr/align.nvim"
+  },
+
+  {
+    "hashivim/vim-terraform"
+  }, 
+
   })
 ----------------
 --- SETTINGS ---
@@ -342,5 +351,24 @@ vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>ds', vim.diagnostic.setqflist)
 
+-- align
+local NS = { noremap = true, silent = true }
 
+vim.keymap.set('x', 'aa', function() require'align'.align_to_char(1, true)             end, NS) -- Aligns to 1 character, looking left
+vim.keymap.set('x', 'as', function() require'align'.align_to_char(2, true, true)       end, NS) -- Aligns to 2 characters, looking left and with previews
+vim.keymap.set('x', 'aw', function() require'align'.align_to_string(false, true, true) end, NS) -- Aligns to a string, looking left and with previews
+vim.keymap.set('x', 'ar', function() require'align'.align_to_string(true, true, true)  end, NS) -- Aligns to a Lua pattern, looking left and with previews
 
+-- terraform
+vim.cmd([[silent! autocmd! filetypedetect BufRead,BufNewFile *.tf]])
+vim.cmd([[autocmd BufRead,BufNewFile *.hcl set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile .terraformrc,terraform.rc set filetype=hcl]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
+vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
+vim.cmd([[let g:terraform_fmt_on_save=1]])
+vim.cmd([[let g:terraform_align=1]])
+
+keymap("n", "<leader>ti", ":!terraform init<CR>", opts)
+keymap("n", "<leader>tv", ":!terraform validate<CR>", opts)
+keymap("n", "<leader>tp", ":!terraform plan<CR>", opts)
+keymap("n", "<leader>taa", ":!terraform apply -auto-approve<CR>", opts)
