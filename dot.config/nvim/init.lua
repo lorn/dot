@@ -133,10 +133,9 @@ require("lazy").setup({
 -- fuzzy finder framework
   {
     "nvim-telescope/telescope.nvim", 
-    tag = '0.1.1',
+    tag = '0.1.5',
     dependencies = { 
       "nvim-lua/plenary.nvim" ,
-      "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons",
     },
     config = function ()
@@ -166,7 +165,6 @@ require("lazy").setup({
     config = function()
       require('nvim-treesitter.configs').setup({
         ensure_installed = {
-          'lua',
           'ruby',
           'terraform',
           'vimdoc',

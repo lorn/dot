@@ -1,7 +1,6 @@
 [user]
   name = Lindolfo 'Lorn' Rodrigues
-  email = lorn@lornlab.org
-
+  # set the GIT_AUTHOR_EMAIL
 [color]
   diff = auto
   status = auto
