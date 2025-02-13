@@ -17,7 +17,13 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 
   -- colorscheme
-
+  { "ellisonleao/gruvbox.nvim",
+    priority = 1000,
+    config = true,
+    opts = {
+      colorscheme = "gruvbox",
+    },
+  },
   -- statusline
   { 
     "nvim-lualine/lualine.nvim",
@@ -365,3 +371,7 @@ vim.cmd([[autocmd BufRead,BufNewFile *.tf,*.tfvars set filetype=terraform]])
 vim.cmd([[autocmd BufRead,BufNewFile *.tfstate,*.tfstate.backup set filetype=json]])
 vim.cmd([[let g:terraform_fmt_on_save=1]])
 vim.cmd([[let g:terraform_align=1]])
+
+-- colorschem
+vim.o.background = "light" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
